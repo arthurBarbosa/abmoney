@@ -1,18 +1,18 @@
 package com.abcode.abmoney.services;
 
-import com.abcode.abmoney.dto.PersonDTO;
+import com.abcode.abmoney.dto.BookEntryDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
-public interface PersonService {
+public interface BookEntryService {
 
-    Page<PersonDTO> findAllPaged(PageRequest pageRequest);
+    Page<BookEntryDTO> findAllPaged(PageRequest pageRequest);
 
-    PersonDTO findById(Long id);
+    BookEntryDTO findById(Long id);
 
-    PersonDTO insert(PersonDTO dto);
+    BookEntryDTO insert(BookEntryDTO dto);
 
-    PersonDTO update(Long id, PersonDTO dto);
+    BookEntryDTO update(Long id, BookEntryDTO dto);
 
     void delete(Long id);
 }

@@ -15,6 +15,7 @@ import java.io.Serializable;
 public class Category implements Serializable {
 
     @Id
+    @EqualsAndHashCode.Include
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

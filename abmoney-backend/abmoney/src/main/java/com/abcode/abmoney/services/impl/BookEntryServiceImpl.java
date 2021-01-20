@@ -1,9 +1,11 @@
 package com.abcode.abmoney.services.impl;
 
-import com.abcode.abmoney.dto.PersonDTO;
-import com.abcode.abmoney.entities.Person;
+import com.abcode.abmoney.dto.BookEntryDTO;
+import com.abcode.abmoney.entities.BookEntry;
+import com.abcode.abmoney.repositories.BookEntryRepository;
+import com.abcode.abmoney.repositories.CategoryRepository;
 import com.abcode.abmoney.repositories.PersonRepository;
-import com.abcode.abmoney.services.PersonService;
+import com.abcode.abmoney.services.BookEntryService;
 import com.abcode.abmoney.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -15,42 +17,48 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityNotFoundException;
 
 @Service
-public class PersonServiceImpl implements PersonService {
+public class BookEntryServiceImpl implements BookEntryService {
 
     @Autowired
-    private PersonRepository repository;
+    private BookEntryRepository repository;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
+
+    @Autowired
+    private PersonRepository personRepository;
 
     @Override
     @Transactional(readOnly = true)
-    public Page<PersonDTO> findAllPaged(PageRequest pageRequest) {
+    public Page<BookEntryDTO> findAllPaged(PageRequest pageRequest) {
         var list = repository.findAll(pageRequest);
-        return list.map(PersonDTO::new);
+        return list.map(BookEntryDTO::new);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public PersonDTO findById(Long id) {
+    public BookEntryDTO findById(Long id) {
         var entity = repository.findById(id);
-        return new PersonDTO(entity.orElseThrow(() -> new ResourceNotFoundException("Entity not found")));
+        return new BookEntryDTO(entity.orElseThrow(() -> new ResourceNotFoundException("Entity not found")));
     }
 
     @Override
     @Transactional
-    public PersonDTO insert(PersonDTO dto) {
-        var entity = new Person();
+    public BookEntryDTO insert(BookEntryDTO dto) {
+        var entity = new BookEntry();
         copyDtoToEntity(dto, entity);
         entity = repository.save(entity);
-        return new PersonDTO(entity);
+        return new BookEntryDTO(entity);
     }
 
     @Override
     @Transactional
-    public PersonDTO update(Long id, PersonDTO dto) {
+    public BookEntryDTO update(Long id, BookEntryDTO dto) {
         try {
             var entity = repository.getOne(id);
             copyDtoToEntity(dto, entity);
             entity = repository.save(entity);
-            return new PersonDTO(entity);
+            return new BookEntryDTO(entity);
         } catch (EntityNotFoundException e) {
             throw new ResourceNotFoundException("Id not found " + id);
         }
@@ -67,9 +75,18 @@ public class PersonServiceImpl implements PersonService {
         }
     }
 
-    private void copyDtoToEntity(PersonDTO dto, Person entity) {
-        entity.setName(dto.getName());
-        entity.setStatus(dto.getStatus());
-        entity.setAddress(dto.getAddress());
+    private void copyDtoToEntity(BookEntryDTO dto, BookEntry entity) {
+
+        var category = categoryRepository.getOne(dto.getCategoryDTO().getId());
+        var person = personRepository.getOne(dto.getPersonDTO().getId());
+
+        entity.setDescription(dto.getDescription());
+        entity.setDueDate(dto.getDueDate());
+        entity.setPaymentDate(dto.getPaymentDate());
+        entity.setValue(dto.getValue());
+        entity.setObservation(dto.getObservation());
+        entity.setType(entity.getType());
+        entity.setCategory(category);
+        entity.setPerson(person);
     }
 }
