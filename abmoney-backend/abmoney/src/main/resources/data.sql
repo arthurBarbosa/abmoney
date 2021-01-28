@@ -34,3 +34,13 @@ INSERT INTO tb_book_entry (description, due_date, payment_date, value, observati
 INSERT INTO tb_book_entry (description, due_date, payment_date, value, observation, type, category_id, person_id) values ('Instrumentos', '2017-06-10', null, 1040.32, null, 'DESPESA', 4, 3);
 INSERT INTO tb_book_entry (description, due_date, payment_date, value, observation, type, category_id, person_id) values ('Café', '2017-04-10', '2017-04-10', 4.32, null, 'DESPESA', 4, 2);
 INSERT INTO tb_book_entry (description, due_date, payment_date, value, observation, type, category_id, person_id) values ('Lanche', '2017-06-10', null, 10.20, null, 'DESPESA', 4, 1);
+
+INSERT INTO tb_user (name, email, password) VALUES('Anna Brown', 'anna@gmail.com', '$2a$10$NYFZ/8WaQ3Qb6FCs.00jce4nxX9w7AkgWVsQCG6oUwTAcZqP9Flqu');
+INSERT INTO tb_user (name, email, password) VALUES ('Jack Brown', 'jack@gmail.com', '$2a$10$NYFZ/8WaQ3Qb6FCs.00jce4nxX9w7AkgWVsQCG6oUwTAcZqP9Flqu');
+
+INSERT INTO tb_role (role_name) VALUES ('ROLE_OPERATOR');
+INSERT INTO tb_role (role_name) VALUES ('ROLE_ADMIN');
+
+INSERT INTO tb_user_role (user_id, role_id) VALUES (1, 1);
+INSERT INTO tb_user_role (user_id, role_id) VALUES (2, 1);
+INSERT INTO tb_user_role (user_id, role_id) VALUES (2, 2);
