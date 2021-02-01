@@ -1,3 +1,4 @@
+import { SharedModule } from './../shared/shared.module';
 import { FormsModule } from '@angular/forms';
 import { InputMaskModule } from 'primeng/inputmask';
 import { DropdownModule } from 'primeng/dropdown';
@@ -31,7 +32,8 @@ import { PersonListComponent } from './person-list/person-list.component';
     CalendarModule,
     SelectButtonModule,
     DropdownModule,
-    InputMaskModule
+    InputMaskModule,
+    SharedModule
   ],
   exports: [PersonCreateComponent, PersonGridComponent, PersonListComponent]
 })

@@ -1,3 +1,4 @@
+import { SharedModule } from './../shared/shared.module';
 import { TableModule } from 'primeng/table';
 import { DropdownModule } from 'primeng/dropdown';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
@@ -32,6 +33,8 @@ import { CommonModule } from '@angular/common';
     SelectButtonModule,
     DropdownModule,
     CurrencyMaskModule,
+
+    SharedModule
   ],
   exports: [BookEntryCreateComponent, BookEntryListComponent],
 })

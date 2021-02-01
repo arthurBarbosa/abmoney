@@ -12,7 +12,7 @@ import { NavComponent } from './components/template/nav/nav.component';
 
 
 
-import { MessageComponent } from './components/shared/message/message.component';
+
 
 
 import { BookEntryModule } from './components/book-entry/book-entry.module';
@@ -22,8 +22,7 @@ import { PersonModule } from './components/person/person.module';
 @NgModule({
   declarations: [
     AppComponent,
-    NavComponent,
-    MessageComponent,
+    NavComponent
   ],
   imports: [
     BrowserModule,
