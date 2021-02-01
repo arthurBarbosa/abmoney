@@ -27,6 +27,10 @@ a.p-button:focus {
   margin-right: .25em !important;
 }
 
+form .p-button {
+  margin-right: .25em;
+}
+
 @media (min-width: 1200px) {
   .container {
     width: 1170px;

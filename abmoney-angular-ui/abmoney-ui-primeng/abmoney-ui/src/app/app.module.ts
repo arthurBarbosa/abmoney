@@ -23,6 +23,8 @@ import { PersonComponent } from './components/person/person.component';
 import { BookEntryCreateComponent } from './components/book-entry/book-entry-create/book-entry-create.component';
 import { PersonCreateComponent } from './components/person/person-create/person-create.component';
 import { MessageComponent } from './components/shared/message/message.component';
+import { BookEntryGridComponent } from './components/book-entry/book-entry-grid/book-entry-grid.component';
+import { PersonGridComponent } from './components/person/person-grid/person-grid.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +35,8 @@ import { MessageComponent } from './components/shared/message/message.component'
     BookEntryCreateComponent,
     PersonCreateComponent,
     MessageComponent,
+    BookEntryGridComponent,
+    PersonGridComponent,
   ],
   imports: [
     BrowserModule,
