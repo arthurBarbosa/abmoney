@@ -7,7 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class BookEntryGridComponent implements OnInit {
 
-  @Input() lancamentos = [];
+  @Input() bookEntry = [];
 
   constructor() { }
 

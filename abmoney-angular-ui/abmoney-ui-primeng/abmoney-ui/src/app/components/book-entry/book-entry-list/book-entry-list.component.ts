@@ -1,31 +1,29 @@
+import { BookEntryService } from './../book-entry.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-book-entry-list',
   templateUrl: './book-entry-list.component.html',
-  styleUrls: ['./book-entry-list.component.css']
+  styleUrls: ['./book-entry-list.component.css'],
 })
 export class BookEntryListComponent implements OnInit {
+  bookEntry = [];
 
-  lancamentos = [
-    { tipo: 'DESPESA', descricao: 'Compra de pão', dataVencimento: new Date(2017, 5, 30),
-    dataPagamento: null, valor: 4.55, pessoa: 'Padaria do José' },
-  { tipo: 'RECEITA', descricao: 'Venda de software', dataVencimento: new Date(2017, 5, 10),
-    dataPagamento: new Date(2017, 5, 30), valor: 80000, pessoa: 'Atacado Brasil' },
-  { tipo: 'DESPESA', descricao: 'Impostos', dataVencimento: new Date(2017, 6, 20),
-    dataPagamento: null, valor: 14312, pessoa: 'Ministério da Fazenda' },
-  { tipo: 'DESPESA', descricao: 'Mensalidade de escola', dataVencimento: new Date(2017, 5, 5),
-    dataPagamento: new Date(2017, 4, 30), valor: 800, pessoa: 'Escola Abelha Rainha' },
-  { tipo: 'RECEITA', descricao: 'Venda de carro', dataVencimento: new Date(2017, 7, 18),
-    dataPagamento: null, valor: 55000, pessoa: 'Sebastião Souza' },
-  { tipo: 'DESPESA', descricao: 'Aluguel', dataVencimento: new Date(2017, 6, 10),
-    dataPagamento: new Date(2017, 6, 9), valor: 1750, pessoa: 'Casa Nova Imóveis' },
-  { tipo: 'DESPESA', descricao: 'Mensalidade musculação', dataVencimento: new Date(2017, 6, 13),
-    dataPagamento: null, valor: 180, pessoa: 'Academia Top' }
-  ];
-  constructor() { }
+  totalElements = 0;
+  page = 0;
+  size = 6;
+
+  constructor(private bookEntryService: BookEntryService) {}
 
   ngOnInit(): void {
+    this.search();
   }
 
+  search() {
+    this.bookEntryService.read()
+    .subscribe(response => {
+      this.bookEntry = response['content'];
+
+    })
+  }
 }
