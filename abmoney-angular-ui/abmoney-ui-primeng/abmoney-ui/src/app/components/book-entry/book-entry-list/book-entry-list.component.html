@@ -1,33 +1,92 @@
 <div class="container">
   <div class="p-grid">
-    <div class="p-col-12">
-      <h1>Lançamentos</h1>
-    </div>
+    <form autocomplete="off" (ngSubmit)="search()">
+      <div class="p-col-12">
+        <h1>Lançamentos</h1>
+      </div>
 
-    <div class="p-col-12">
-      <label for="description">Descrição</label>
-      <input class="p-col-12" id="description" type="text" pInputText />
-    </div>
+      <div class="p-col-12">
+        <label for="description">Descrição</label>
+        <input class="p-col-12" id="description" type="text" pInputText name="description" [(ngModel)]="description"/>
+      </div>
 
-    <div class="p-col-12">
-      <label for="" class="display-block">Vencimento</label>
-      <input class="p-col" id="description" type="text" pInputText />
-      <label for="">até</label>
-      <input class="p-col" id="description" type="text" pInputText />
-    </div>
+      <div class="p-col-12">
+        <label for="" class="display-block">Vencimento</label>
+        <input class="p-col" id="description" type="text" pInputText />
+        <label for="">até</label>
+        <input class="p-col" id="description" type="text" pInputText />
+      </div>
 
-    <div class="p-col-12">
-      <button pButton type="submit" label="pesquisar"></button>
-    </div>
+      <div class="p-col-12">
+        <button pButton type="submit" label="pesquisar"></button>
+      </div>
+    </form>
   </div>
 
   <div class="p-grid">
     <div class="p-col-12">
-      <app-book-entry-grid [bookEntry]="bookEntry"></app-book-entry-grid>
+      <p-table
+      [value]="bookEntry"
+      [paginator]="true"
+      [rows]="4"
+      [responsive]="true"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Pessoa</th>
+          <th>Descrição</th>
+          <th class="col-data-header">Vencimento</th>
+          <th class="col-data-header">Pagamento</th>
+          <th class="col-valor-header">Valor</th>
+          <th class="col-acoes-header"></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-bookEntry>
+        <tr>
+          <td>
+            <span class="p-column-title">Pessoa</span>
+            {{ bookEntry.personDTO.name }}
+          </td>
+          <td>
+            <span class="p-column-title">Descrição</span>
+            {{ bookEntry.description }}
+          </td>
+          <td class="col-data">
+            <span class="p-column-title">Vencimento</span>
+            {{ bookEntry.dueDate | date: "dd/MM/YYYY" }}
+          </td>
+          <td class="col-data">
+            <span class="p-column-title">Pagamento</span>
+            {{ bookEntry.dataPagamento | date: "dd/MM/YYYY" }}
+          </td>
+          <td class="col-valor">
+            <span class="p-column-title">Valor</span>
+            <span
+              [style.color]="bookEntry.type === 'DESPESA' ? 'red' : 'blue'"
+              >{{ bookEntry.value | number: "1.2-2" }}</span
+            >
+          </td>
+          <td class="col-acoes">
+            <a
+              pButton
+              icon="pi pi-pencil"
+              pTooltip="Editar"
+              tooltipPosition="top"
+            ></a>
+            <button
+              pButton
+              icon="pi pi-trash"
+              pTooltip="Excluir"
+              tooltipPosition="top"
+            ></button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+
     </div>
     <div class="p-col-12">
       <a pButton label="Novo Lançamento"></a>
     </div>
   </div>
-
 </div>

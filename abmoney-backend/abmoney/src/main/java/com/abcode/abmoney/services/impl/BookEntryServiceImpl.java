@@ -2,6 +2,7 @@ package com.abcode.abmoney.services.impl;
 
 import com.abcode.abmoney.dto.BookEntryDTO;
 import com.abcode.abmoney.entities.BookEntry;
+import com.abcode.abmoney.repositories.filter.BookEntryFilter;
 import com.abcode.abmoney.repositories.BookEntryRepository;
 import com.abcode.abmoney.repositories.CategoryRepository;
 import com.abcode.abmoney.repositories.PersonRepository;
@@ -11,10 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.List;
 
 @Service
 public class BookEntryServiceImpl implements BookEntryService {
@@ -73,6 +76,11 @@ public class BookEntryServiceImpl implements BookEntryService {
         } catch (EmptyResultDataAccessException e) {
             throw new ResourceNotFoundException("Id not found " + id);
         }
+    }
+
+    @Override
+    public Page<BookEntry> search(BookEntryFilter bookEntryFilter, Pageable pageable) {
+        return repository.filter(bookEntryFilter, pageable);
     }
 
     private void copyDtoToEntity(BookEntryDTO dto, BookEntry entity) {
