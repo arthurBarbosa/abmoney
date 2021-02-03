@@ -1,12 +1,11 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { from, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import * as moment from 'moment';
 
-export class LancamentoFiltro {
+export interface LancamentoFiltro {
   description: string;
-  page = 0;
-  linesPerPage = 5;
+  dueDate: Date;
+  expirationDateBy: Date;
 }
 
 @Injectable({
@@ -17,28 +16,56 @@ export class BookEntryService {
 
   constructor(private http: HttpClient) {}
 
-  read(filter: LancamentoFiltro): Promise<any> {
+  // read(filter: LancamentoFiltro): Observable<any[]> {
+  //   const headers = new HttpHeaders().append(
+  //     'Authorization',
+  //     'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MTI0NDMxMDIsInVzZXJfbmFtZSI6ImFubmFAZ21haWwuY29tIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9PUEVSQVRPUiJdLCJqdGkiOiJlYmFiODgzNi1mMTAzLTQ2OTgtOTA0YS1jMzNmNTc5NTY2YzYiLCJjbGllbnRfaWQiOiJteWFwcG5hbWUxMjMiLCJzY29wZSI6WyJyZWFkIiwid3JpdGUiXX0.PqmXt-ZyiMDoBTHAD_8OulPW3SCJ1p5q8D9zmkjirdU'
+  //   );
+
+  //   let params = new HttpParams();
+  //   // params.set('page', filter.page);
+  //   // params.set('size', filter.size);
+
+  //   if (filter.description) {
+  //     params = params.set('description', filter.description);
+  //   }
+
+  //   return this.http
+  //     .get<any[]>(`${this.baseUrl}/filter?${params.toString()}`, {
+  //       headers,
+  //       params,
+  //     })
+  //     .pipe(map((obj) => obj));
+  // }
+
+  getBookEntry(filter: LancamentoFiltro): Promise<any> {
     const headers = new HttpHeaders().append(
       'Authorization',
-      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MTIzNjg1MTIsInVzZXJfbmFtZSI6ImFubmFAZ21haWwuY29tIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9PUEVSQVRPUiJdLCJqdGkiOiI1ZDg4MDBhYi00ODJjLTQxZDUtYTY0NC1iMjU3MDEwN2FiMTciLCJjbGllbnRfaWQiOiJteWFwcG5hbWUxMjMiLCJzY29wZSI6WyJyZWFkIiwid3JpdGUiXX0.a8NMhqP_cL_2soe5Pt3tpP3P8tTriJ4k5gOD6intgoU'
+      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MTI0NDMxMDIsInVzZXJfbmFtZSI6ImFubmFAZ21haWwuY29tIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9PUEVSQVRPUiJdLCJqdGkiOiJlYmFiODgzNi1mMTAzLTQ2OTgtOTA0YS1jMzNmNTc5NTY2YzYiLCJjbGllbnRfaWQiOiJteWFwcG5hbWUxMjMiLCJzY29wZSI6WyJyZWFkIiwid3JpdGUiXX0.PqmXt-ZyiMDoBTHAD_8OulPW3SCJ1p5q8D9zmkjirdU'
     );
-
     let params = new HttpParams();
 
     if (filter.description) {
       params = params.set('description', filter.description);
     }
 
+    if (filter.dueDate) {
+      params = params.set(
+        'dueDate',
+        moment(filter.dueDate).format('YYYY-MM-DD')
+      );
+    }
+
+    if (filter.expirationDateBy) {
+      params = params.set(
+        'expirationDateBy',
+        moment(filter.expirationDateBy).format('YYYY-MM-DD')
+      );
+    }
+
     return this.http
       .get(`${this.baseUrl}/filter?`, { headers, params })
       .toPromise()
-      .then((response) => {
-        const bookEntry = response['content'];
-        const result = {
-          bookEntry,
-          total: response['totalElements'],
-        };
-        return result;
-      });
+      .then((response) => response['content']);
   }
 }

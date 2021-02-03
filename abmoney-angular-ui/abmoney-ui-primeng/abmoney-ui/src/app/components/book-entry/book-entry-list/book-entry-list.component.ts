@@ -9,26 +9,32 @@ import { Observable } from 'rxjs';
 })
 export class BookEntryListComponent implements OnInit {
   description: string;
-  bookEntry:[] = [];
-  filtro = new LancamentoFiltro();
-  totalElements = 0;
-  page = 0;
-  size = 6;
+  bookEntry: any[];
+  dueDate: Date;
+  expirationDateBy: Date;
+
 
   constructor(private bookEntryService: BookEntryService) {}
 
   ngOnInit(): void {
-    this.search(this.page);
-    console.log('aaaaaaaquiiiiiiiiiiiiiiiii' + this.bookEntry);
+    this.list();
   }
 
-  search(page = 0) {
-    this.filtro.page = page;
-    this.bookEntryService.read(this.filtro).then((response) => {
-      this.totalElements = response.total;
-      this.bookEntry = response.bookEntry;
-      this.page = response.number;
-      console.log(this.bookEntry);
-    });
+  // search() {
+  //   this.bookEntryService.read(this.filtro).subscribe((response) => {
+  //     this.bookEntry = response['content'];
+  //   });
+  // }
+
+  list() {
+    const filter: LancamentoFiltro = {
+      description: this.description,
+      dueDate: this.dueDate,
+      expirationDateBy: this.expirationDateBy
+    };
+
+    this.bookEntryService
+      .getBookEntry(filter)
+      .then((bookEntry) => (this.bookEntry = bookEntry));
   }
 }

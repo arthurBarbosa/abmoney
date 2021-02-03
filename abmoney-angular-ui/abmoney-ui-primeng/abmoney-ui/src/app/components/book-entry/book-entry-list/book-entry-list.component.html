@@ -1,6 +1,6 @@
 <div class="container">
   <div class="p-grid">
-    <form autocomplete="off" (ngSubmit)="search()">
+    <form autocomplete="off" (ngSubmit)="list()">
       <div class="p-col-12">
         <h1>Lançamentos</h1>
       </div>
@@ -12,9 +12,9 @@
 
       <div class="p-col-12">
         <label for="" class="display-block">Vencimento</label>
-        <input class="p-col" id="description" type="text" pInputText />
+        <p-calendar dateFormat="dd/mm/yyyy" [inputStyle]="{width:'95px'}" name="dueDate" [(ngModel)]="dueDate" ></p-calendar>
         <label for="">até</label>
-        <input class="p-col" id="description" type="text" pInputText />
+        <p-calendar dateFormat="dd/mm/yyyy" [inputStyle]="{width:'95px'}" name="expirationDateBy" [(ngModel)]="expirationDateBy" ></p-calendar>
       </div>
 
       <div class="p-col-12">
@@ -30,6 +30,7 @@
       [paginator]="true"
       [rows]="4"
       [responsive]="true"
+
     >
       <ng-template pTemplate="header">
         <tr>
@@ -45,7 +46,7 @@
         <tr>
           <td>
             <span class="p-column-title">Pessoa</span>
-            {{ bookEntry.personDTO.name }}
+            {{ bookEntry.person.name }}
           </td>
           <td>
             <span class="p-column-title">Descrição</span>
