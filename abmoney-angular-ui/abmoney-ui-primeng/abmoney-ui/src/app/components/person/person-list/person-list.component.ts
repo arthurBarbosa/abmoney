@@ -1,24 +1,33 @@
+import { LazyLoadEvent } from 'primeng/api';
+import { Person, PersonService } from './../person.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-person-list',
   templateUrl: './person-list.component.html',
-  styleUrls: ['./person-list.component.css']
+  styleUrls: ['./person-list.component.css'],
 })
 export class PersonListComponent implements OnInit {
+  linesPerPage = 0;
+  person = new Person();
 
-  pessoas = [
-    { nome: 'Manoel Pinheiro', cidade: 'Uberlândia', estado: 'MG', ativo: true },
-    { nome: 'Sebastião da Silva', cidade: 'São Paulo', estado: 'SP', ativo: false },
-    { nome: 'Carla Souza', cidade: 'Florianópolis', estado: 'SC', ativo: true },
-    { nome: 'Luís Pereira', cidade: 'Curitiba', estado: 'PR', ativo: true },
-    { nome: 'Vilmar Andrade', cidade: 'Rio de Janeiro', estado: 'RJ', ativo: false },
-    { nome: 'Paula Maria', cidade: 'Uberlândia', estado: 'MG', ativo: true }
-  ];
-  constructor() { }
+  persons: any[];
 
-  ngOnInit(): void {
+  constructor(private personService: PersonService) {}
+
+  ngOnInit(): void {}
+
+  list(page = 0): void {
+    this.person.page = page;
+
+    this.personService.getPersons(this.person).then((result) => {
+      this.linesPerPage = result.total;
+      this.persons = result.persons;
+    });
   }
 
+  changePage(event: LazyLoadEvent): void {
+    const page = event.first / event.rows;
+    this.list(page);
+  }
 }
-

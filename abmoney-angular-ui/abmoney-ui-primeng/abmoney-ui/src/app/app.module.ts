@@ -1,3 +1,4 @@
+import { PersonService } from './components/person/person.service';
 import { BookEntryService } from './components/book-entry/book-entry.service';
 import { CoreModule } from './core/core.module';
 import { NgModule } from '@angular/core';
@@ -26,7 +27,7 @@ import { PersonModule } from './components/person/person.module';
 
     CoreModule,
   ],
-  providers: [BookEntryService],
+  providers: [BookEntryService, PersonService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
