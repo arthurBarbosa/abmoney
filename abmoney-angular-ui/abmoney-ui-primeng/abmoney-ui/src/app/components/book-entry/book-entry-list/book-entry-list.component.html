@@ -7,14 +7,14 @@
 
       <div class="p-col-12">
         <label for="description">Descrição</label>
-        <input class="p-col-12" id="description" type="text" pInputText name="description" [(ngModel)]="description"/>
+        <input class="p-col-12" id="description" type="text" pInputText name="description" [(ngModel)]="filter.description"/>
       </div>
 
       <div class="p-col-12">
         <label for="" class="display-block">Vencimento</label>
-        <p-calendar dateFormat="dd/mm/yyyy" [inputStyle]="{width:'95px'}" name="dueDate" [(ngModel)]="dueDate" ></p-calendar>
+        <p-calendar dateFormat="dd/mm/yyyy" [inputStyle]="{width:'95px'}" name="dueDate" [(ngModel)]="filter.dueDate" ></p-calendar>
         <label for="">até</label>
-        <p-calendar dateFormat="dd/mm/yyyy" [inputStyle]="{width:'95px'}" name="expirationDateBy" [(ngModel)]="expirationDateBy" ></p-calendar>
+        <p-calendar dateFormat="dd/mm/yyyy" [inputStyle]="{width:'95px'}" name="expirationDateBy" [(ngModel)]="filter.expirationDateBy" ></p-calendar>
       </div>
 
       <div class="p-col-12">
@@ -27,11 +27,22 @@
     <div class="p-col-12">
       <p-table
       [value]="bookEntry"
-      [paginator]="true"
-      [rows]="4"
       [responsive]="true"
+      [paginator]="true"
+      [rows]="filter.size"
+      [lazy]="true"
+      [totalRecords]="linesPerPage"
+      (onLazyLoad)="changePage($event)"
 
     >
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="6">
+          Nenhum lançamento encontrado
+        </td>
+      </tr>
+    </ng-template>
+
       <ng-template pTemplate="header">
         <tr>
           <th>Pessoa</th>

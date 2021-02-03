@@ -1,6 +1,7 @@
 import { BookEntryService, LancamentoFiltro } from './../book-entry.service';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
+import { LazyLoadEvent } from 'primeng/api';
 
 @Component({
   selector: 'app-book-entry-list',
@@ -8,33 +9,25 @@ import { Observable } from 'rxjs';
   styleUrls: ['./book-entry-list.component.css'],
 })
 export class BookEntryListComponent implements OnInit {
-  description: string;
+  linesPerPage = 0;
+  filter = new LancamentoFiltro();
   bookEntry: any[];
-  dueDate: Date;
-  expirationDateBy: Date;
-
 
   constructor(private bookEntryService: BookEntryService) {}
 
-  ngOnInit(): void {
-    this.list();
+  ngOnInit(): void {}
+
+  list(page = 0): void {
+    this.filter.page = page;
+    this.bookEntryService.getBookEntry(this.filter).then((result) => {
+      this.linesPerPage = result.total;
+      this.bookEntry = result.bookEntry;
+      console.log(result);
+    });
   }
 
-  // search() {
-  //   this.bookEntryService.read(this.filtro).subscribe((response) => {
-  //     this.bookEntry = response['content'];
-  //   });
-  // }
-
-  list() {
-    const filter: LancamentoFiltro = {
-      description: this.description,
-      dueDate: this.dueDate,
-      expirationDateBy: this.expirationDateBy
-    };
-
-    this.bookEntryService
-      .getBookEntry(filter)
-      .then((bookEntry) => (this.bookEntry = bookEntry));
+  changePage(event: LazyLoadEvent): void {
+    const page = event.first / event.rows;
+    this.list(page);
   }
 }

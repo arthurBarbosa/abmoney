@@ -2,10 +2,12 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as moment from 'moment';
 
-export interface LancamentoFiltro {
+export class LancamentoFiltro {
   description: string;
   dueDate: Date;
   expirationDateBy: Date;
+  page = 0;
+  size = 5;
 }
 
 @Injectable({
@@ -43,7 +45,10 @@ export class BookEntryService {
       'Authorization',
       'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MTI0NDMxMDIsInVzZXJfbmFtZSI6ImFubmFAZ21haWwuY29tIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9PUEVSQVRPUiJdLCJqdGkiOiJlYmFiODgzNi1mMTAzLTQ2OTgtOTA0YS1jMzNmNTc5NTY2YzYiLCJjbGllbnRfaWQiOiJteWFwcG5hbWUxMjMiLCJzY29wZSI6WyJyZWFkIiwid3JpdGUiXX0.PqmXt-ZyiMDoBTHAD_8OulPW3SCJ1p5q8D9zmkjirdU'
     );
-    let params = new HttpParams();
+    let params = new HttpParams()
+
+    .set('page', filter.page.toString())
+    .set('size', filter.size.toString());
 
     if (filter.description) {
       params = params.set('description', filter.description);
@@ -66,6 +71,14 @@ export class BookEntryService {
     return this.http
       .get(`${this.baseUrl}/filter?`, { headers, params })
       .toPromise()
-      .then((response) => response['content']);
+      .then((response) => {
+        const bookEntry = response['content'];
+
+        const result = {
+          bookEntry,
+          total: response['totalElements'],
+        };
+        return result;
+      });
   }
 }
