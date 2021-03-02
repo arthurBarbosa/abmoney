@@ -16,7 +16,7 @@ export class LancamentoFiltro {
 export class BookEntryService {
   baseUrl = 'http://localhost:8080/bookEntry';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   // read(filter: LancamentoFiltro): Observable<any[]> {
   //   const headers = new HttpHeaders().append(
@@ -43,12 +43,12 @@ export class BookEntryService {
   getBookEntry(filter: LancamentoFiltro): Promise<any> {
     const headers = new HttpHeaders().append(
       'Authorization',
-      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MTI0NDMxMDIsInVzZXJfbmFtZSI6ImFubmFAZ21haWwuY29tIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9PUEVSQVRPUiJdLCJqdGkiOiJlYmFiODgzNi1mMTAzLTQ2OTgtOTA0YS1jMzNmNTc5NTY2YzYiLCJjbGllbnRfaWQiOiJteWFwcG5hbWUxMjMiLCJzY29wZSI6WyJyZWFkIiwid3JpdGUiXX0.PqmXt-ZyiMDoBTHAD_8OulPW3SCJ1p5q8D9zmkjirdU'
+      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MTQ3OTI5NTMsInVzZXJfbmFtZSI6ImFubmFAZ21haWwuY29tIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9PUEVSQVRPUiJdLCJqdGkiOiJjOWI5ZmRlNS04ZDk2LTQ5ZmMtODAwZi1jNmIxN2IzMmNkZTciLCJjbGllbnRfaWQiOiJteWFwcG5hbWUxMjMiLCJzY29wZSI6WyJyZWFkIiwid3JpdGUiXX0.22vrGrQNMNgTlZEhjWwKRuudyp3DaidfnptJtP7R7G4'
     );
     let params = new HttpParams()
 
-    .set('page', filter.page.toString())
-    .set('size', filter.size.toString());
+      .set('page', filter.page.toString())
+      .set('size', filter.size.toString());
 
     if (filter.description) {
       params = params.set('description', filter.description);
@@ -80,5 +80,17 @@ export class BookEntryService {
         };
         return result;
       });
+  }
+
+  delete(id: number): Promise<void> {
+
+    const headers = new HttpHeaders().append(
+      'Authorization',
+      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MTQ3OTM3OTAsInVzZXJfbmFtZSI6ImphY2tAZ21haWwuY29tIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9PUEVSQVRPUiIsIlJPTEVfQURNSU4iXSwianRpIjoiMGIxNDY4MWUtMDI0My00ZDhhLWE5ZWItZmE1NjBjNTgxOTllIiwiY2xpZW50X2lkIjoibXlhcHBuYW1lMTIzIiwic2NvcGUiOlsicmVhZCIsIndyaXRlIl19.T1znzJXKYkYGHY_qxaw_ocjcB9F15dnqnw3xIj72mrk'
+    );
+
+    return this.http.delete(`${this.baseUrl}/${id}`, { headers })
+      .toPromise()
+      .then(() => null);
   }
 }

@@ -7,14 +7,14 @@
 
       <div class="p-col-12">
         <label for="description">Descrição</label>
-        <input class="p-col-12" id="description" type="text" pInputText name="description" [(ngModel)]="filter.description"/>
+        <input class="p-col-12" id="description" type="text" pInputText name="description" [(ngModel)]="filter.description" />
       </div>
 
       <div class="p-col-12">
         <label for="" class="display-block">Vencimento</label>
-        <p-calendar dateFormat="dd/mm/yyyy" [inputStyle]="{width:'95px'}" name="dueDate" [(ngModel)]="filter.dueDate" ></p-calendar>
+        <p-calendar dateFormat="dd/mm/yyyy" [inputStyle]="{width:'95px'}" name="dueDate" [(ngModel)]="filter.dueDate"></p-calendar>
         <label for="">até</label>
-        <p-calendar dateFormat="dd/mm/yyyy" [inputStyle]="{width:'95px'}" name="expirationDateBy" [(ngModel)]="filter.expirationDateBy" ></p-calendar>
+        <p-calendar dateFormat="dd/mm/yyyy" [inputStyle]="{width:'95px'}" name="expirationDateBy" [(ngModel)]="filter.expirationDateBy"></p-calendar>
       </div>
 
       <div class="p-col-12">
@@ -25,76 +25,54 @@
 
   <div class="p-grid">
     <div class="p-col-12">
-      <p-table
-      [value]="bookEntry"
-      [responsive]="true"
-      [paginator]="true"
-      [rows]="filter.size"
-      [lazy]="true"
-      [totalRecords]="linesPerPage"
-      (onLazyLoad)="changePage($event)"
+      <p-table [value]="bookEntry" [responsive]="true" [paginator]="true" [rows]="filter.size" [lazy]="true" [totalRecords]="linesPerPage" (onLazyLoad)="changePage($event)" #table>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="6">
+              Nenhum lançamento encontrado
+            </td>
+          </tr>
+        </ng-template>
 
-    >
-    <ng-template pTemplate="emptymessage">
-      <tr>
-        <td colspan="6">
-          Nenhum lançamento encontrado
-        </td>
-      </tr>
-    </ng-template>
-
-      <ng-template pTemplate="header">
-        <tr>
-          <th>Pessoa</th>
-          <th>Descrição</th>
-          <th class="col-data-header">Vencimento</th>
-          <th class="col-data-header">Pagamento</th>
-          <th class="col-valor-header">Valor</th>
-          <th class="col-acoes-header"></th>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-bookEntry>
-        <tr>
-          <td>
-            <span class="p-column-title">Pessoa</span>
-            {{ bookEntry.person.name }}
-          </td>
-          <td>
-            <span class="p-column-title">Descrição</span>
-            {{ bookEntry.description }}
-          </td>
-          <td class="col-data">
-            <span class="p-column-title">Vencimento</span>
-            {{ bookEntry.dueDate | date: "dd/MM/YYYY" }}
-          </td>
-          <td class="col-data">
-            <span class="p-column-title">Pagamento</span>
-            {{ bookEntry.dataPagamento | date: "dd/MM/YYYY" }}
-          </td>
-          <td class="col-valor">
-            <span class="p-column-title">Valor</span>
-            <span
-              [style.color]="bookEntry.type === 'DESPESA' ? 'red' : 'blue'"
-              >{{ bookEntry.value | number: "1.2-2" }}</span
-            >
-          </td>
-          <td class="col-acoes">
-            <a
-              pButton
-              icon="pi pi-pencil"
-              pTooltip="Editar"
-              tooltipPosition="top"
-            ></a>
-            <button
-              pButton
-              icon="pi pi-trash"
-              pTooltip="Excluir"
-              tooltipPosition="top"
-            ></button>
-          </td>
-        </tr>
-      </ng-template>
-    </p-table>
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Pessoa</th>
+            <th>Descrição</th>
+            <th class="col-data-header">Vencimento</th>
+            <th class="col-data-header">Pagamento</th>
+            <th class="col-valor-header">Valor</th>
+            <th class="col-acoes-header"></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-bookEntry>
+          <tr>
+            <td>
+              <span class="p-column-title">Pessoa</span>
+              {{ bookEntry.person.name }}
+            </td>
+            <td>
+              <span class="p-column-title">Descrição</span>
+              {{ bookEntry.description }}
+            </td>
+            <td class="col-data">
+              <span class="p-column-title">Vencimento</span>
+              {{ bookEntry.dueDate | date: "dd/MM/YYYY" }}
+            </td>
+            <td class="col-data">
+              <span class="p-column-title">Pagamento</span>
+              {{ bookEntry.paymentDate | date: "dd/MM/YYYY" }}
+            </td>
+            <td class="col-valor">
+              <span class="p-column-title">Valor</span>
+              <span [style.color]="bookEntry.type === 'DESPESA' ? 'red' : 'blue'">{{ bookEntry.value | number: "1.2-2" }}</span>
+            </td>
+            <td class="col-acoes">
+              <a pButton icon="pi pi-pencil" pTooltip="Editar" tooltipPosition="top"></a>
+              <button pButton icon="pi pi-trash" pTooltip="Excluir" tooltipPosition="top" (click)="delete(bookEntry)"></button>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
 
     </div>
     <div class="p-col-12">

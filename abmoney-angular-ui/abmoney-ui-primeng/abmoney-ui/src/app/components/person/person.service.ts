@@ -4,7 +4,8 @@ import { Injectable } from '@angular/core';
 export class Person {
   name: string;
   page = 0;
-  linesPerPage = 2;
+  linesPerPage = 5;
+  size = 5;
 }
 
 @Injectable({
@@ -13,12 +14,12 @@ export class Person {
 export class PersonService {
   baseUrl = 'http://localhost:8080/persons';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getPersons(person: Person): Promise<any> {
     const headers = new HttpHeaders().append(
       'Authorization',
-      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MTI0NDMxMDIsInVzZXJfbmFtZSI6ImFubmFAZ21haWwuY29tIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9PUEVSQVRPUiJdLCJqdGkiOiJlYmFiODgzNi1mMTAzLTQ2OTgtOTA0YS1jMzNmNTc5NTY2YzYiLCJjbGllbnRfaWQiOiJteWFwcG5hbWUxMjMiLCJzY29wZSI6WyJyZWFkIiwid3JpdGUiXX0.PqmXt-ZyiMDoBTHAD_8OulPW3SCJ1p5q8D9zmkjirdU'
+      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MTQ3MTU0NDAsInVzZXJfbmFtZSI6ImFubmFAZ21haWwuY29tIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9PUEVSQVRPUiJdLCJqdGkiOiJjZjMzMzQxYy0yNzUzLTQyMzMtOThmZC0wODNiNjE3ZmMxZWEiLCJjbGllbnRfaWQiOiJteWFwcG5hbWUxMjMiLCJzY29wZSI6WyJyZWFkIiwid3JpdGUiXX0.9Mh9J3tKmrspl31EcvP3IgbwGgmoa6LW0TyYXEbkDrQ'
     );
 
     let params = new HttpParams()
@@ -45,12 +46,39 @@ export class PersonService {
   getAllPerson(): Promise<any> {
     const headers = new HttpHeaders().append(
       'Authorization',
-      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MTI0NDMxMDIsInVzZXJfbmFtZSI6ImFubmFAZ21haWwuY29tIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9PUEVSQVRPUiJdLCJqdGkiOiJlYmFiODgzNi1mMTAzLTQ2OTgtOTA0YS1jMzNmNTc5NTY2YzYiLCJjbGllbnRfaWQiOiJteWFwcG5hbWUxMjMiLCJzY29wZSI6WyJyZWFkIiwid3JpdGUiXX0.PqmXt-ZyiMDoBTHAD_8OulPW3SCJ1p5q8D9zmkjirdU'
+      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MTQ3MTU0NDAsInVzZXJfbmFtZSI6ImFubmFAZ21haWwuY29tIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9PUEVSQVRPUiJdLCJqdGkiOiJjZjMzMzQxYy0yNzUzLTQyMzMtOThmZC0wODNiNjE3ZmMxZWEiLCJjbGllbnRfaWQiOiJteWFwcG5hbWUxMjMiLCJzY29wZSI6WyJyZWFkIiwid3JpdGUiXX0.9Mh9J3tKmrspl31EcvP3IgbwGgmoa6LW0TyYXEbkDrQ'
     );
 
     return this.http
       .get(this.baseUrl, { headers })
       .toPromise()
       .then((response) => response['content']);
+  }
+
+  search(filtro: Person): Promise<any> {
+    const headers = new HttpHeaders().append(
+      'Authorization',
+      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MTQ3MTU0NDAsInVzZXJfbmFtZSI6ImFubmFAZ21haWwuY29tIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9PUEVSQVRPUiJdLCJqdGkiOiJjZjMzMzQxYy0yNzUzLTQyMzMtOThmZC0wODNiNjE3ZmMxZWEiLCJjbGllbnRfaWQiOiJteWFwcG5hbWUxMjMiLCJzY29wZSI6WyJyZWFkIiwid3JpdGUiXX0.9Mh9J3tKmrspl31EcvP3IgbwGgmoa6LW0TyYXEbkDrQ'
+    );
+    let params = new HttpParams()
+      .set('page', filtro.page.toString())
+      .set('size', filtro.linesPerPage.toString());
+
+    if (filtro.name) {
+      params = params.set('name', filtro.name);
+    }
+
+    return this.http.get(`${this.baseUrl}/search?`, { headers, params })
+      .toPromise()
+      .then(response => {
+        const pessoas = response['content'];
+
+        const resultado = {
+          pessoas,
+          total: response['totalElements']
+        };
+
+        return resultado;
+      });
   }
 }

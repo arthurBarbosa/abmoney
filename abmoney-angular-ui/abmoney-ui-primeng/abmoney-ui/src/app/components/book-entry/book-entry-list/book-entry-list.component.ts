@@ -1,7 +1,8 @@
 import { BookEntryService, LancamentoFiltro } from './../book-entry.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
 import { LazyLoadEvent } from 'primeng/api';
+import { Table } from 'primeng/table';
 
 @Component({
   selector: 'app-book-entry-list',
@@ -12,10 +13,11 @@ export class BookEntryListComponent implements OnInit {
   linesPerPage = 0;
   filter = new LancamentoFiltro();
   bookEntry: any[];
+  @ViewChild('table') grid: Table;
 
-  constructor(private bookEntryService: BookEntryService) {}
+  constructor(private bookEntryService: BookEntryService) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { this.list(); }
 
   list(page = 0): void {
     this.filter.page = page;
@@ -29,5 +31,12 @@ export class BookEntryListComponent implements OnInit {
   changePage(event: LazyLoadEvent): void {
     const page = event.first / event.rows;
     this.list(page);
+  }
+
+  delete(bookEntry: any): void {
+    this.bookEntryService.delete(bookEntry.id)
+      .then(() => {
+        this.grid.reset();
+      });
   }
 }
