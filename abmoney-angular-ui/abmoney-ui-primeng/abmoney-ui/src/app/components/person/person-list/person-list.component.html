@@ -18,7 +18,7 @@
 
   <div class="p-grid">
     <div class="p-col-12">
-      <p-table [value]="persons" [responsive]="true" [paginator]="true" [rows]="person.size" [lazy]="true" [totalRecords]="linesPerPage" (onLazyLoad)="changePage($event)">
+      <p-table [value]="persons" [responsive]="true" [paginator]="true" [rows]="person.size" [lazy]="true" [totalRecords]="linesPerPage" (onLazyLoad)="changePage($event)" #table>
         <ng-template pTemplate="emptymessage">
           <tr>
             <td colspan="5">
@@ -58,7 +58,7 @@
             <td class="col-acoes">
               <span class="p-column-title"></span>
               <a pButton icon="pi pi-pencil" pTooltip="Editar" tooltipPosition="top"></a>
-              <button pButton icon="pi pi-trash" pTooltip="Excluir" tooltipPosition="top"></button>
+              <button pButton icon="pi pi-trash" pTooltip="Excluir" tooltipPosition="top" (click)="confirm(person)"></button>
             </td>
           </tr>
         </ng-template>

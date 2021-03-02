@@ -1,6 +1,8 @@
-import { LazyLoadEvent } from 'primeng/api';
+import { ErrorHandlerService } from './../../../core/error-handler.service';
+import { Table } from 'primeng/table';
+import { LazyLoadEvent, ConfirmationService, MessageService } from 'primeng/api';
 import { Person, PersonService } from './../person.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-person-list',
@@ -13,7 +15,13 @@ export class PersonListComponent implements OnInit {
   person = new Person();
   persons: any[];
 
-  constructor(private personService: PersonService) { }
+  @ViewChild('table') grid: Table;
+
+  constructor(
+    private personService: PersonService,
+    private confirmation: ConfirmationService,
+    private messageService: MessageService,
+    private errorHandler: ErrorHandlerService) { }
 
   ngOnInit(): void { this.list(); }
 
@@ -39,6 +47,30 @@ export class PersonListComponent implements OnInit {
   changePage(event: LazyLoadEvent): void {
     const page = event.first / event.rows;
     this.list(page);
+  }
+
+  confirm(person: any): void {
+    this.confirmation.confirm({
+      message: 'Tem certeza que deseja excluir?',
+      accept: () => {
+        this.delete(person);
+      }
+    })
+  }
+
+  delete(person: any): void {
+    this.personService.delete(person.id)
+      .then(() => {
+        if (this.grid.first === 0) {
+          this.list();
+        } else {
+          this.grid.reset();
+        }
+        this.messageService
+          .add({ severity: 'success', detail: 'Pessoa excluída com sucesso.' });
+
+      })
+      .catch(erro => this.errorHandler.handle(erro));
   }
 
 }
