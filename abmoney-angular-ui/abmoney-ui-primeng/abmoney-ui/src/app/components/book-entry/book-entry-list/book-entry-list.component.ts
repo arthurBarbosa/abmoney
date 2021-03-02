@@ -1,3 +1,4 @@
+import { ErrorHandlerService } from './../../../core/error-handler.service';
 import { BookEntryService, LancamentoFiltro } from './../book-entry.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -18,7 +19,8 @@ export class BookEntryListComponent implements OnInit {
   constructor(
     private bookEntryService: BookEntryService,
     private messageService: MessageService,
-    private confirmation: ConfirmationService) { }
+    private confirmation: ConfirmationService,
+    private errorHandler: ErrorHandlerService) { }
 
   ngOnInit(): void { this.list(); }
 
@@ -27,8 +29,8 @@ export class BookEntryListComponent implements OnInit {
     this.bookEntryService.getBookEntry(this.filter).then((result) => {
       this.linesPerPage = result.total;
       this.bookEntry = result.bookEntry;
-      console.log(result);
-    });
+    })
+      .catch(erro => this.errorHandler.handle(erro));
   }
 
   changePage(event: LazyLoadEvent): void {
@@ -56,6 +58,7 @@ export class BookEntryListComponent implements OnInit {
         this.messageService
           .add({ severity: 'success', detail: 'Lançamento excluído com sucesso.' });
 
-      });
+      })
+      .catch(erro => this.errorHandler.handle(erro));
   }
 }
