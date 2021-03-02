@@ -4,8 +4,10 @@ import com.abcode.abmoney.dto.PersonDTO;
 import com.abcode.abmoney.entities.Person;
 import com.abcode.abmoney.repositories.PersonRepository;
 import com.abcode.abmoney.services.PersonService;
+import com.abcode.abmoney.services.exceptions.DatabaseException;
 import com.abcode.abmoney.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -58,12 +60,13 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    @Transactional
     public void delete(Long id) {
         try {
             repository.deleteById(id);
         } catch (EmptyResultDataAccessException e) {
             throw new ResourceNotFoundException("Id not found " + id);
+        } catch (DataIntegrityViolationException e) {
+            throw new DatabaseException("Não é possível remover uma pessoa com vinculo");
         }
     }
 

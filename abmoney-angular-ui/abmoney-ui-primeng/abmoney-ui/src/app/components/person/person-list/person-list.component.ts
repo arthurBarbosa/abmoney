@@ -55,7 +55,7 @@ export class PersonListComponent implements OnInit {
       accept: () => {
         this.delete(person);
       }
-    })
+    });
   }
 
   delete(person: any): void {
