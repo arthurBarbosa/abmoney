@@ -69,6 +69,12 @@ public class CategoryServiceImpl implements CategoryService {
         }
     }
 
+    @Override
+    public List<CategoryDTO> listAll() {
+        var list = repository.findAll();
+        return list.stream().map(obj -> new CategoryDTO(obj)).collect(Collectors.toList());
+    }
+
     private void copyDtoToEntity(CategoryDTO dto, Category entity) {
         entity.setName(dto.getName());
     }

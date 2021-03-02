@@ -1,3 +1,5 @@
+import { ErrorHandlerService } from './../../../core/error-handler.service';
+import { CategoryService } from './../../category/category.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -12,18 +14,28 @@ export class BookEntryCreateComponent implements OnInit {
   ];
 
   categorias = [
-    {label: 'Alimentação', value: 1},
-    {label: 'Transporte', value: 2}
+
   ];
 
   pessoas = [
-    {label: 'João Rosa Junior', value: 1},
-    {label: 'Estevam Rodrigues', value: 2},
-    {label: 'André Machado', value: 3},
-    {label: 'Célio Matos', value: 4}
+    { label: 'João Rosa Junior', value: 1 },
+    { label: 'Estevam Rodrigues', value: 2 },
+    { label: 'André Machado', value: 3 },
+    { label: 'Célio Matos', value: 4 }
   ];
 
-  constructor() {}
+  constructor(
+    private categoryService: CategoryService,
+    private errorHandler: ErrorHandlerService) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.load();
+  }
+
+  load() {
+    return this.categoryService.getAllCategories()
+      .then(categorias => {
+        this.categorias = categorias.map(c => ({ label: c.name, value: c.id }));
+      });
+  }
 }

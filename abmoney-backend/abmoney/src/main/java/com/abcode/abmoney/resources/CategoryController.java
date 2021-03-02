@@ -20,7 +20,7 @@ public class CategoryController {
     @Autowired
     private CategoryService service;
 
-    @GetMapping
+
     public ResponseEntity<Page<CategoryDTO>> findAllPaged(@RequestParam(value = "page", defaultValue = "0") Integer page,
                                                           @RequestParam(value = "linesPerPage", defaultValue = "12") Integer linesPerPage,
                                                           @RequestParam(value = "direction", defaultValue = "DESC") String direction,
@@ -29,6 +29,11 @@ public class CategoryController {
         PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
 
         return ResponseEntity.ok().body(service.findAllPaged(pageRequest));
+    }
+
+    @GetMapping
+    public List<CategoryDTO> listAll(){
+        return service.listAll();
     }
 
     @GetMapping(value = "/{id}")
