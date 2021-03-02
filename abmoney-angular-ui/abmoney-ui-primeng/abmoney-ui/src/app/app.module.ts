@@ -2,6 +2,10 @@ import { PersonService } from './components/person/person.service';
 import { BookEntryService } from './components/book-entry/book-entry.service';
 import { CoreModule } from './core/core.module';
 import { NgModule } from '@angular/core';
+
+import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
+
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -24,10 +28,13 @@ import { PersonModule } from './components/person/person.module';
     PersonModule,
 
     CurrencyMaskModule,
-
+    ToastModule,
     CoreModule,
   ],
-  providers: [BookEntryService, PersonService],
+  providers: [
+    BookEntryService,
+    PersonService,
+    MessageService],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

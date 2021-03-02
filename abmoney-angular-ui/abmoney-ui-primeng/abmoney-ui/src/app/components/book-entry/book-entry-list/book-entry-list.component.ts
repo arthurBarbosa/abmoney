@@ -1,7 +1,7 @@
 import { BookEntryService, LancamentoFiltro } from './../book-entry.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
-import { LazyLoadEvent } from 'primeng/api';
+import { LazyLoadEvent, MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
 
 @Component({
@@ -15,7 +15,9 @@ export class BookEntryListComponent implements OnInit {
   bookEntry: any[];
   @ViewChild('table') grid: Table;
 
-  constructor(private bookEntryService: BookEntryService) { }
+  constructor(
+    private bookEntryService: BookEntryService,
+    private messageService: MessageService) { }
 
   ngOnInit(): void { this.list(); }
 
@@ -36,7 +38,14 @@ export class BookEntryListComponent implements OnInit {
   delete(bookEntry: any): void {
     this.bookEntryService.delete(bookEntry.id)
       .then(() => {
-        this.grid.reset();
+        if (this.grid.first === 0) {
+          this.list();
+        } else {
+          this.grid.reset();
+        }
+        this.messageService
+          .add({ severity: 'success', detail: 'Lançamento excluído com sucesso.' });
+
       });
   }
 }
