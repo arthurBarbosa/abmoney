@@ -70,6 +70,13 @@ public class PersonServiceImpl implements PersonService {
         }
     }
 
+    @Override
+    public void inactivePerson(Long id, Boolean status) {
+        var person = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Nenhuma Pessoa encontrada com"));
+        person.setStatus(status);
+        repository.save(person);
+    }
+
     private void copyDtoToEntity(PersonDTO dto, Person entity) {
         entity.setName(dto.getName());
         entity.setStatus(dto.getStatus());

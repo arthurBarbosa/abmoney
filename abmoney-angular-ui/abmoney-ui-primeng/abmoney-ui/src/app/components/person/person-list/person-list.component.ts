@@ -73,4 +73,16 @@ export class PersonListComponent implements OnInit {
       .catch(erro => this.errorHandler.handle(erro));
   }
 
+  updateStatus(person: any): void {
+    const newStatus = !person.status;
+
+    this.personService.updateStatus(person.id, newStatus)
+      .then(() => {
+        const status = newStatus ? 'ativada' : 'desativada';
+        person.status = newStatus;
+        this.messageService.add({ severity: 'success', detail: `Pessoa ${status} com sucesso!` });
+      })
+      .catch(erro => this.errorHandler.handle(erro));
+  }
+
 }

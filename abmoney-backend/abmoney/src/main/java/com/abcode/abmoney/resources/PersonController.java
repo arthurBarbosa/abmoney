@@ -69,5 +69,11 @@ public class PersonController {
         return personRepository.findByNameIsContainingIgnoreCase(name, pageable);
     }
 
+    @PutMapping(value = "/{id}/status")
+    public ResponseEntity<Void> updateStatus(@PathVariable Long id, @RequestBody Boolean status) {
+        service.inactivePerson(id, status);
+        return ResponseEntity.noContent().build();
+    }
+
 
 }

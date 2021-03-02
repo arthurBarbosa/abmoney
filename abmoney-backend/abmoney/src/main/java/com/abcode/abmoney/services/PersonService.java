@@ -15,4 +15,6 @@ public interface PersonService {
     PersonDTO update(Long id, PersonDTO dto);
 
     void delete(Long id);
+
+    void inactivePerson(Long id, Boolean status);
 }
