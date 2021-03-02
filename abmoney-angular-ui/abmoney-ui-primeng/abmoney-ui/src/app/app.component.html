@@ -3,4 +3,12 @@
 <!-- <app-book-entry-create></app-book-entry-create> -->
 <!-- <app-person-list></app-person-list> -->
 <app-book-entry-list></app-book-entry-list>
+
 <p-toast></p-toast>
+
+<p-confirmDialog header="Confirmação" icon="pi pi-question-circle" #confirm>
+  <p-footer>
+    <button type="button" pButton icon="pi pi-check" label="Sim" (click)="confirm.accept()"></button>
+    <button type="button" pButton icon="pi pi-times" label="Não" (click)="confirm.reject()"></button>
+  </p-footer>
+</p-confirmDialog>

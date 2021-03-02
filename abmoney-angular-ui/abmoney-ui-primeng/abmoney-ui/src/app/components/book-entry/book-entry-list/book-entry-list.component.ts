@@ -1,7 +1,7 @@
 import { BookEntryService, LancamentoFiltro } from './../book-entry.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
-import { LazyLoadEvent, MessageService } from 'primeng/api';
+import { LazyLoadEvent, MessageService, ConfirmationService } from 'primeng/api';
 import { Table } from 'primeng/table';
 
 @Component({
@@ -17,7 +17,8 @@ export class BookEntryListComponent implements OnInit {
 
   constructor(
     private bookEntryService: BookEntryService,
-    private messageService: MessageService) { }
+    private messageService: MessageService,
+    private confirmation: ConfirmationService) { }
 
   ngOnInit(): void { this.list(); }
 
@@ -33,6 +34,15 @@ export class BookEntryListComponent implements OnInit {
   changePage(event: LazyLoadEvent): void {
     const page = event.first / event.rows;
     this.list(page);
+  }
+
+  confirm(bookEntry: any): void {
+    this.confirmation.confirm({
+      message: 'Tem certeza que deseja excluir?',
+      accept: () => {
+        this.delete(bookEntry);
+      }
+    });
   }
 
   delete(bookEntry: any): void {
