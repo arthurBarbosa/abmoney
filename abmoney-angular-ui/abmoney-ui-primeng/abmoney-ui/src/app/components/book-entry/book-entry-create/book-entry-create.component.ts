@@ -6,7 +6,7 @@ import { BookEntry } from './../../../model/book-entry';
 import { ErrorHandlerService } from './../../../core/error-handler.service';
 import { CategoryService } from './../../category/category.service';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-book-entry-create',
@@ -29,7 +29,8 @@ export class BookEntryCreateComponent implements OnInit {
     private personService: PersonService,
     private bookEntryService: BookEntryService,
     private messageService: MessageService,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    private router: Router) { }
 
   ngOnInit(): void {
     const bookEntryId = this.route.snapshot.params['id'];
@@ -74,10 +75,11 @@ export class BookEntryCreateComponent implements OnInit {
 
   addBookEntry(form: FormControl): void {
     this.bookEntryService.add(this.bookEntry)
-      .then(() => {
+      .then(response => {
         this.messageService.add({ severity: 'success', detail: 'Lançamento salvo com sucesso.' });
         form.reset();
         this.bookEntry = new BookEntry();
+        this.router.navigate(['lancamentos', response.id]);
       })
       .catch(err => this.errorHandler.handle(err));
   }
@@ -95,5 +97,12 @@ export class BookEntryCreateComponent implements OnInit {
     });
   }
 
+  new(form: FormControl): void {
+    form.reset();
+    setTimeout(function () {
+      this.bookEntry = new BookEntry();
+    }.bind(this), 1);
+    this.router.navigate(['/lancamentos/novo']);
 
+  }
 }

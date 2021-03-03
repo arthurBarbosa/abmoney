@@ -1,3 +1,4 @@
+import { PageNotFoundComponent } from './components/not-found/page-not-found/page-not-found.component';
 import { PersonCreateComponent } from './components/person/person-create/person-create.component';
 import { PersonListComponent } from './components/person/person-list/person-list.component';
 import { BookEntryListComponent } from './components/book-entry/book-entry-list/book-entry-list.component';
@@ -6,11 +7,14 @@ import { RouterModule, Routes } from '@angular/router';
 import { BookEntryCreateComponent } from './components/book-entry/book-entry-create/book-entry-create.component';
 
 const routes: Routes = [
+  { path: '', redirectTo: '/lancamentos', pathMatch: 'full' },
   { path: 'lancamentos', component: BookEntryListComponent },
   { path: 'lancamentos/novo', component: BookEntryCreateComponent },
   { path: 'lancamentos/:id', component: BookEntryCreateComponent },
   { path: 'pessoas', component: PersonListComponent },
-  { path: 'pessoas/novo', component: PersonCreateComponent }
+  { path: 'pessoas/novo', component: PersonCreateComponent },
+  { path: 'page-not-found', component: PageNotFoundComponent },
+  { path: '**', redirectTo: 'page-not-found' },
 ];
 
 @NgModule({

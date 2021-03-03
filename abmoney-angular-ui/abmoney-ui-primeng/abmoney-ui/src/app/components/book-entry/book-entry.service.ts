@@ -45,7 +45,7 @@ export class BookEntryService {
   getBookEntry(filter: LancamentoFiltro): Promise<any> {
     const headers = new HttpHeaders().append(
       'Authorization',
-      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MTQ3OTI5NTMsInVzZXJfbmFtZSI6ImFubmFAZ21haWwuY29tIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9PUEVSQVRPUiJdLCJqdGkiOiJjOWI5ZmRlNS04ZDk2LTQ5ZmMtODAwZi1jNmIxN2IzMmNkZTciLCJjbGllbnRfaWQiOiJteWFwcG5hbWUxMjMiLCJzY29wZSI6WyJyZWFkIiwid3JpdGUiXX0.22vrGrQNMNgTlZEhjWwKRuudyp3DaidfnptJtP7R7G4'
+      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MTQ4Nzk1NzYsInVzZXJfbmFtZSI6ImphY2tAZ21haWwuY29tIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9PUEVSQVRPUiIsIlJPTEVfQURNSU4iXSwianRpIjoiNjE5YTA3M2ItYWNiZC00Y2ZlLWJhODktNDBhNWUxMGM4MTY1IiwiY2xpZW50X2lkIjoibXlhcHBuYW1lMTIzIiwic2NvcGUiOlsicmVhZCIsIndyaXRlIl19.a8fHrErl3oKVy6k5JCmEfCEnIHdeYIqaKQB-c5FzBQE'
     );
     let params = new HttpParams()
 
@@ -88,7 +88,7 @@ export class BookEntryService {
 
     const headers = new HttpHeaders().append(
       'Authorization',
-      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MTQ3OTM3OTAsInVzZXJfbmFtZSI6ImphY2tAZ21haWwuY29tIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9PUEVSQVRPUiIsIlJPTEVfQURNSU4iXSwianRpIjoiMGIxNDY4MWUtMDI0My00ZDhhLWE5ZWItZmE1NjBjNTgxOTllIiwiY2xpZW50X2lkIjoibXlhcHBuYW1lMTIzIiwic2NvcGUiOlsicmVhZCIsIndyaXRlIl19.T1znzJXKYkYGHY_qxaw_ocjcB9F15dnqnw3xIj72mrk'
+      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MTQ4Nzk1NzYsInVzZXJfbmFtZSI6ImphY2tAZ21haWwuY29tIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9PUEVSQVRPUiIsIlJPTEVfQURNSU4iXSwianRpIjoiNjE5YTA3M2ItYWNiZC00Y2ZlLWJhODktNDBhNWUxMGM4MTY1IiwiY2xpZW50X2lkIjoibXlhcHBuYW1lMTIzIiwic2NvcGUiOlsicmVhZCIsIndyaXRlIl19.a8fHrErl3oKVy6k5JCmEfCEnIHdeYIqaKQB-c5FzBQE'
     );
 
     return this.http.delete(`${this.baseUrl}/${id}`, { headers })
@@ -99,7 +99,7 @@ export class BookEntryService {
   add(bookEntry: BookEntry): Promise<BookEntry> {
     const headers = new HttpHeaders().append(
       'Authorization',
-      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MTQ3OTM3OTAsInVzZXJfbmFtZSI6ImphY2tAZ21haWwuY29tIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9PUEVSQVRPUiIsIlJPTEVfQURNSU4iXSwianRpIjoiMGIxNDY4MWUtMDI0My00ZDhhLWE5ZWItZmE1NjBjNTgxOTllIiwiY2xpZW50X2lkIjoibXlhcHBuYW1lMTIzIiwic2NvcGUiOlsicmVhZCIsIndyaXRlIl19.T1znzJXKYkYGHY_qxaw_ocjcB9F15dnqnw3xIj72mrk'
+      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MTQ4Nzk1NzYsInVzZXJfbmFtZSI6ImphY2tAZ21haWwuY29tIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9PUEVSQVRPUiIsIlJPTEVfQURNSU4iXSwianRpIjoiNjE5YTA3M2ItYWNiZC00Y2ZlLWJhODktNDBhNWUxMGM4MTY1IiwiY2xpZW50X2lkIjoibXlhcHBuYW1lMTIzIiwic2NvcGUiOlsicmVhZCIsIndyaXRlIl19.a8fHrErl3oKVy6k5JCmEfCEnIHdeYIqaKQB-c5FzBQE'
     ).append('Content-Type', 'application/json');
 
     return this.http.post<BookEntry>(this.baseUrl, bookEntry, { headers }).toPromise();
@@ -109,7 +109,7 @@ export class BookEntryService {
 
     const headers = new HttpHeaders().append(
       'Authorization',
-      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MTQ3OTM3OTAsInVzZXJfbmFtZSI6ImphY2tAZ21haWwuY29tIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9PUEVSQVRPUiIsIlJPTEVfQURNSU4iXSwianRpIjoiMGIxNDY4MWUtMDI0My00ZDhhLWE5ZWItZmE1NjBjNTgxOTllIiwiY2xpZW50X2lkIjoibXlhcHBuYW1lMTIzIiwic2NvcGUiOlsicmVhZCIsIndyaXRlIl19.T1znzJXKYkYGHY_qxaw_ocjcB9F15dnqnw3xIj72mrk'
+      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MTQ4Nzk1NzYsInVzZXJfbmFtZSI6ImphY2tAZ21haWwuY29tIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9PUEVSQVRPUiIsIlJPTEVfQURNSU4iXSwianRpIjoiNjE5YTA3M2ItYWNiZC00Y2ZlLWJhODktNDBhNWUxMGM4MTY1IiwiY2xpZW50X2lkIjoibXlhcHBuYW1lMTIzIiwic2NvcGUiOlsicmVhZCIsIndyaXRlIl19.a8fHrErl3oKVy6k5JCmEfCEnIHdeYIqaKQB-c5FzBQE'
     ).append('Content-Type', 'application/json');
 
     return this.http.put(`${this.baseUrl}/${bookEntry.id}`,
@@ -128,7 +128,7 @@ export class BookEntryService {
   getBookEntryById(id: number): Promise<BookEntry> {
     const headers = new HttpHeaders().append(
       'Authorization',
-      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MTQ3OTM3OTAsInVzZXJfbmFtZSI6ImphY2tAZ21haWwuY29tIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9PUEVSQVRPUiIsIlJPTEVfQURNSU4iXSwianRpIjoiMGIxNDY4MWUtMDI0My00ZDhhLWE5ZWItZmE1NjBjNTgxOTllIiwiY2xpZW50X2lkIjoibXlhcHBuYW1lMTIzIiwic2NvcGUiOlsicmVhZCIsIndyaXRlIl19.T1znzJXKYkYGHY_qxaw_ocjcB9F15dnqnw3xIj72mrk'
+      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MTQ4Nzk1NzYsInVzZXJfbmFtZSI6ImphY2tAZ21haWwuY29tIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9PUEVSQVRPUiIsIlJPTEVfQURNSU4iXSwianRpIjoiNjE5YTA3M2ItYWNiZC00Y2ZlLWJhODktNDBhNWUxMGM4MTY1IiwiY2xpZW50X2lkIjoibXlhcHBuYW1lMTIzIiwic2NvcGUiOlsicmVhZCIsIndyaXRlIl19.a8fHrErl3oKVy6k5JCmEfCEnIHdeYIqaKQB-c5FzBQE'
     );
 
     return this.http.get(`${this.baseUrl}/${id}`, { headers })

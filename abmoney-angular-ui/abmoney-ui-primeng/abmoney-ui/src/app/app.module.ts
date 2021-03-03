@@ -11,9 +11,10 @@ import { AppComponent } from './app.component';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { BookEntryModule } from './components/book-entry/book-entry.module';
 import { PersonModule } from './components/person/person.module';
+import { PageNotFoundComponent } from './components/not-found/page-not-found/page-not-found.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, PageNotFoundComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
