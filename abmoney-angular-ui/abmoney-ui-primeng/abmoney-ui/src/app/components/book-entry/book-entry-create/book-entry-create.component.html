@@ -1,12 +1,12 @@
 <div class="container">
-  <form autocomplete="off">
+  <form autocomplete="off" #f="ngForm" (ngSubmit)="save(f)">
     <div class="p-grid">
       <div class="p-col-12">
         <h1>Novo Lançamento</h1>
       </div>
 
       <div class="p-col-12">
-        <p-selectButton [options]="types" #type></p-selectButton>
+        <p-selectButton [options]="types" name="type"  [(ngModel)]="bookEntry.type" #type></p-selectButton>
       </div>
 
       <div class="p-col-6 p-md-3 p-fluid">
@@ -14,6 +14,9 @@
         <p-calendar dateFormat="dd/mm/yy"
           [inline]="false"
           [readonlyInput]="false"
+           name="dueDate"
+           #dueDate="ngModel"
+           [(ngModel)]="bookEntry.dueDate"
           [showIcon]="false"></p-calendar>
       </div>
 
@@ -22,6 +25,8 @@
         <p-calendar dateFormat="dd/mm/yy"
           [inline]="false"
           [readonlyInput]="false"
+          name="paymentDate"
+           [(ngModel)]="bookEntry.paymentDate"
           [showIcon]="false"></p-calendar>
       </div>
 
@@ -29,23 +34,24 @@
         <label>Descrição</label>
         <input pInputText
           type="text"
-          name="descricao"
+          name="description"
           ngModel
-          #descricao="ngModel"
+          #description="ngModel"
+           [(ngModel)]="bookEntry.description"
           required
           minlength="5"
         />
         <app-message
-          [control]="descricao"
+          [control]="description"
           error="required"
           text="Informe uma descrição"
         >
         </app-message>
         <app-message
-          [control]="descricao"
+          [control]="description"
           error="minlength"
           text="  Mínimo de {{
-            descricao.errors?.minlength?.requiredLength
+            description.errors?.minlength?.requiredLength
           }} caracteres."
         >
         </app-message>
@@ -64,29 +70,32 @@
             allowNegative: false
           }"
           ngModel
-          name="valor"
+          name="value"
+           [(ngModel)]="bookEntry.value"
           placeholder="0,00"
         />
       </div>
 
       <div class="p-col-12 p-md-6 p-fluid">
-        <label>Categoria {{ categoria.value }}</label>
-        <p-dropdown #categoria [options]="categorias" placeholder="Selecione">
+        <label>Categoria {{ category.value }}</label>
+        <p-dropdown #category [options]="categories" name="category"  [(ngModel)]="bookEntry.categoryDTO.id" placeholder="Selecione">
         </p-dropdown>
       </div>
 
       <div class="p-col-12 p-md-6 p-fluid">
-        <label>Pessoa</label>
-        <p-dropdown
-          [options]="pessoas"
+        <label>Pessoa {{person.value}}</label>
+        <p-dropdown #person
+          [options]="persons"
           placeholder="selecione"
           [filter]="true"
+          name="person"
+          [(ngModel)]="bookEntry.personDTO.id"
         ></p-dropdown>
       </div>
 
       <div class="p-col-12 p-fluid">
         <label>Observação</label>
-        <textarea pInputTextarea rows="3"></textarea>
+        <textarea pInputTextarea rows="3" name="observation"  [(ngModel)]="bookEntry.observation"></textarea>
       </div>
 
       <div class="p-col-12">

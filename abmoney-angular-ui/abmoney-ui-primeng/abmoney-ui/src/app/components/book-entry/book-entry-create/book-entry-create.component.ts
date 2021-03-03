@@ -13,29 +13,43 @@ export class BookEntryCreateComponent implements OnInit {
     { label: 'Despesa', value: 'DESPESA' },
   ];
 
-  categorias = [
-
-  ];
-
-  pessoas = [
-    { label: 'João Rosa Junior', value: 1 },
-    { label: 'Estevam Rodrigues', value: 2 },
-    { label: 'André Machado', value: 3 },
-    { label: 'Célio Matos', value: 4 }
-  ];
+  categories = [];
+  persons = [];
+  bookEntry = new BookEntry();
 
   constructor(
     private categoryService: CategoryService,
-    private errorHandler: ErrorHandlerService) { }
+    private errorHandler: ErrorHandlerService,
+    private personService: PersonService, 
+    private bookEntryService: BookEntryService, 
+    private messageService: MessageService) { }
 
   ngOnInit(): void {
     this.load();
+    this.loadPersons();
+  }
+
+  save(form: FormControl){
+   this.bookEntryService.add(this.bookEntry)
+    .then(() => {
+      this.messageService.add({severity: 'success', detail: 'Lançamento salvo com sucesso.'});
+      console.log(form)  
+      form.reset();
+      this.bookEntry = new BookEntry();
+    })
+    .catch(err => this.errorHandler.handle(err));
   }
 
   load() {
     return this.categoryService.getAllCategories()
-      .then(categorias => {
-        this.categorias = categorias.map(c => ({ label: c.name, value: c.id }));
+      .then(response => {
+        this.categories = response.map(c => ({ label: c.name, value: c.id }));
       });
+  }
+
+  loadPersons(){
+    this.personService.getAllPerson().then(response => {
+      this.persons = response.map(p =>({label:p.name, value:p.id}));
+    })
   }
 }

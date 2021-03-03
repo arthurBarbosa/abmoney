@@ -93,7 +93,7 @@ public class BookEntryServiceImpl implements BookEntryService {
         entity.setPaymentDate(dto.getPaymentDate());
         entity.setValue(dto.getValue());
         entity.setObservation(dto.getObservation());
-        entity.setType(entity.getType());
+        entity.setType(dto.getType());
         entity.setCategory(category);
         entity.setPerson(person);
     }

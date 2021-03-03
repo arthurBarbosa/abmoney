@@ -20,9 +20,9 @@ public class BookEntryDTO implements Serializable {
 
     private Long id;
     private String description;
-    @JsonFormat(pattern =  "dd/MM/yyyy")
+
     private LocalDate dueDate;
-    @JsonFormat(pattern =  "dd/MM/yyyy")
+
     private LocalDate paymentDate;
     private BigDecimal value;
     private String observation;
