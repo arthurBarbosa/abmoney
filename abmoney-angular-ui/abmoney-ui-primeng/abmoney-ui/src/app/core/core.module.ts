@@ -17,6 +17,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { PersonService } from './../components/person/person.service';
 import { BookEntryService } from './../components/book-entry/book-entry.service';
 import { ErrorHandlerService } from './error-handler.service';
+import { AuthService } from './../security/auth.service';
 
 registerLocaleData(localePt);
 
@@ -41,6 +42,7 @@ registerLocaleData(localePt);
     ErrorHandlerService,
     BookEntryService,
     PersonService,
+    AuthService,
     Title,
     { provide: LOCALE_ID, useValue: 'pt-BR' }
   ]

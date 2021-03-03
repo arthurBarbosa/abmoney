@@ -8,7 +8,7 @@
       </div>
 
       <div class="p-col-12">
-        <input pInputText type="email" name="user" placeholder="E-mail" ngModel required #user>
+        <input pInputText type="email" name="username" placeholder="E-mail" ngModel required #username>
       </div>
 
       <div class="p-col-12">
@@ -16,7 +16,7 @@
       </div>
 
       <div class="p-col-12">
-        <button pButton type="submit" label="Login" [disabled]="!f.valid" (click)="login(user.value, password.value)"></button>
+        <button pButton type="submit" label="Login" [disabled]="!f.valid" (click)="login(username.value, password.value)"></button>
       </div>
 
     </div>
