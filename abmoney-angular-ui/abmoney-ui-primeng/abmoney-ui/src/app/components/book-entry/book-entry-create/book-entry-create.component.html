@@ -6,106 +6,59 @@
       </div>
 
       <div class="p-col-12">
-        <p-selectButton [options]="types" name="type"  [(ngModel)]="bookEntry.type" #type></p-selectButton>
+        <p-selectButton [options]="types" name="type" [(ngModel)]="bookEntry.type" #type></p-selectButton>
       </div>
 
       <div class="p-col-6 p-md-3 p-fluid">
         <label>Vencimento</label>
-        <p-calendar dateFormat="dd/mm/yy"
-          [inline]="false"
-          [readonlyInput]="false"
-           name="dueDate"
-           #dueDate="ngModel"
-           [(ngModel)]="bookEntry.dueDate"
-          [showIcon]="false"></p-calendar>
+        <p-calendar dateFormat="dd/mm/yy" [inline]="false" [readonlyInput]="false" name="dueDate" #dueDate="ngModel" [(ngModel)]="bookEntry.dueDate" [showIcon]="false"></p-calendar>
       </div>
 
       <div class="p-col-6 p-md-3 p-fluid">
         <label>{{ type.value === "RECEITA" ? "Recebimento" : "Pagamento" }}</label>
-        <p-calendar dateFormat="dd/mm/yy"
-          [inline]="false"
-          [readonlyInput]="false"
-          name="paymentDate"
-           [(ngModel)]="bookEntry.paymentDate"
-          [showIcon]="false"></p-calendar>
+        <p-calendar dateFormat="dd/mm/yy" [inline]="false" [readonlyInput]="false" name="paymentDate" [(ngModel)]="bookEntry.paymentDate" [showIcon]="false"></p-calendar>
       </div>
 
       <div class="p-col-12 p-md-9 p-fluid">
         <label>Descrição</label>
-        <input pInputText
-          type="text"
-          name="description"
-          ngModel
-          #description="ngModel"
-           [(ngModel)]="bookEntry.description"
-          required
-          minlength="5"
-        />
-        <app-message
-          [control]="description"
-          error="required"
-          text="Informe uma descrição"
-        >
+        <input pInputText type="text" name="description" ngModel #description="ngModel" [(ngModel)]="bookEntry.description" required minlength="5" />
+        <app-message [control]="description" error="required" text="Informe uma descrição">
         </app-message>
-        <app-message
-          [control]="description"
-          error="minlength"
-          text="  Mínimo de {{
+        <app-message [control]="description" error="minlength" text="  Mínimo de {{
             description.errors?.minlength?.requiredLength
-          }} caracteres."
-        >
+          }} caracteres.">
         </app-message>
       </div>
 
       <div class="p-col-12 p-md-3 p-fluid">
         <label>Valor</label>
-        <input
-          pInputText
-          type="text"
-          currencyMask
-          [options]="{
+        <input pInputText type="text" currencyMask [options]="{
             prefix: '',
             thousands: '.',
             decimal: ',',
             allowNegative: false
-          }"
-          ngModel
-          name="value"
-           [(ngModel)]="bookEntry.value"
-          placeholder="0,00"
-        />
+          }" ngModel name="value" [(ngModel)]="bookEntry.value" placeholder="0,00" />
       </div>
 
       <div class="p-col-12 p-md-6 p-fluid">
         <label>Categoria {{ category.value }}</label>
-        <p-dropdown #category [options]="categories" name="category"  [(ngModel)]="bookEntry.categoryDTO.id" placeholder="Selecione">
+        <p-dropdown #category [options]="categories" name="category" [(ngModel)]="bookEntry.categoryDTO.id" placeholder="Selecione">
         </p-dropdown>
       </div>
 
       <div class="p-col-12 p-md-6 p-fluid">
         <label>Pessoa {{person.value}}</label>
-        <p-dropdown #person
-          [options]="persons"
-          placeholder="selecione"
-          [filter]="true"
-          name="person"
-          [(ngModel)]="bookEntry.personDTO.id"
-        ></p-dropdown>
+        <p-dropdown #person [options]="persons" placeholder="selecione" [filter]="true" name="person" [(ngModel)]="bookEntry.personDTO.id"></p-dropdown>
       </div>
 
       <div class="p-col-12 p-fluid">
         <label>Observação</label>
-        <textarea pInputTextarea rows="3" name="observation"  [(ngModel)]="bookEntry.observation"></textarea>
+        <textarea pInputTextarea rows="3" name="observation" [(ngModel)]="bookEntry.observation"></textarea>
       </div>
 
       <div class="p-col-12">
         <button pButton type="submit" label="Salvar"></button>
-        <button
-          pButton
-          type="button"
-          label="Novo"
-          class="p-button-info"
-        ></button>
+        <button pButton type="button" label="Novo" class="p-button-info"></button>
         <a href="javascript:;">Voltar para a pesquisa</a>
       </div>
     </div>

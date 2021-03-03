@@ -1,7 +1,8 @@
 import { HttpParams, HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Person } from '../../model/person';
 
-export class Person {
+export class PersonFilter {
   name: string;
   page = 0;
   linesPerPage = 5;
@@ -16,7 +17,7 @@ export class PersonService {
 
   constructor(private http: HttpClient) { }
 
-  getPersons(person: Person): Promise<any> {
+  getPersons(person: PersonFilter): Promise<any> {
     const headers = new HttpHeaders().append(
       'Authorization',
       'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MTQ3OTM3OTAsInVzZXJfbmFtZSI6ImphY2tAZ21haWwuY29tIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9PUEVSQVRPUiIsIlJPTEVfQURNSU4iXSwianRpIjoiMGIxNDY4MWUtMDI0My00ZDhhLWE5ZWItZmE1NjBjNTgxOTllIiwiY2xpZW50X2lkIjoibXlhcHBuYW1lMTIzIiwic2NvcGUiOlsicmVhZCIsIndyaXRlIl19.T1znzJXKYkYGHY_qxaw_ocjcB9F15dnqnw3xIj72mrk'
@@ -55,7 +56,7 @@ export class PersonService {
       .then((response) => response['content']);
   }
 
-  search(filtro: Person): Promise<any> {
+  search(filtro: PersonFilter): Promise<any> {
     const headers = new HttpHeaders().append(
       'Authorization',
       'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MTQ3OTM3OTAsInVzZXJfbmFtZSI6ImphY2tAZ21haWwuY29tIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9PUEVSQVRPUiIsIlJPTEVfQURNSU4iXSwianRpIjoiMGIxNDY4MWUtMDI0My00ZDhhLWE5ZWItZmE1NjBjNTgxOTllIiwiY2xpZW50X2lkIjoibXlhcHBuYW1lMTIzIiwic2NvcGUiOlsicmVhZCIsIndyaXRlIl19.T1znzJXKYkYGHY_qxaw_ocjcB9F15dnqnw3xIj72mrk'
@@ -101,6 +102,15 @@ export class PersonService {
       .append('Content-Type', 'application/json');
 
     return this.http.put(`${this.baseUrl}/${id}/status`, status, { headers }).toPromise().then(() => null);
+  }
+
+  add(person: Person): Promise<Person> {
+    const headers = new HttpHeaders().append(
+      'Authorization',
+      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MTQ3OTM3OTAsInVzZXJfbmFtZSI6ImphY2tAZ21haWwuY29tIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9PUEVSQVRPUiIsIlJPTEVfQURNSU4iXSwianRpIjoiMGIxNDY4MWUtMDI0My00ZDhhLWE5ZWItZmE1NjBjNTgxOTllIiwiY2xpZW50X2lkIjoibXlhcHBuYW1lMTIzIiwic2NvcGUiOlsicmVhZCIsIndyaXRlIl19.T1znzJXKYkYGHY_qxaw_ocjcB9F15dnqnw3xIj72mrk'
+    ).append('Content-Type', 'application/json');
+
+    return this.http.post<Person>(this.baseUrl, person, { headers }).toPromise();
   }
 
 }

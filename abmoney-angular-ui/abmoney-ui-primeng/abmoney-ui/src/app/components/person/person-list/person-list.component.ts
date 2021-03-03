@@ -1,7 +1,7 @@
 import { ErrorHandlerService } from './../../../core/error-handler.service';
 import { Table } from 'primeng/table';
 import { LazyLoadEvent, ConfirmationService, MessageService } from 'primeng/api';
-import { Person, PersonService } from './../person.service';
+import { PersonFilter, PersonService } from './../person.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 
 @Component({
@@ -12,7 +12,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 export class PersonListComponent implements OnInit {
   linesPerPage = 0;
   size = 5;
-  person = new Person();
+  person = new PersonFilter();
   persons: any[];
 
   @ViewChild('table') grid: Table;

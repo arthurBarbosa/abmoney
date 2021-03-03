@@ -1,3 +1,8 @@
+import { FormControl } from '@angular/forms';
+import { MessageService } from 'primeng/api';
+import { BookEntryService } from './../book-entry.service';
+import { PersonService } from './../../person/person.service';
+import { BookEntry } from './../../../model/book-entry';
 import { ErrorHandlerService } from './../../../core/error-handler.service';
 import { CategoryService } from './../../category/category.service';
 import { Component, OnInit } from '@angular/core';
@@ -20,8 +25,8 @@ export class BookEntryCreateComponent implements OnInit {
   constructor(
     private categoryService: CategoryService,
     private errorHandler: ErrorHandlerService,
-    private personService: PersonService, 
-    private bookEntryService: BookEntryService, 
+    private personService: PersonService,
+    private bookEntryService: BookEntryService,
     private messageService: MessageService) { }
 
   ngOnInit(): void {
@@ -29,27 +34,26 @@ export class BookEntryCreateComponent implements OnInit {
     this.loadPersons();
   }
 
-  save(form: FormControl){
-   this.bookEntryService.add(this.bookEntry)
-    .then(() => {
-      this.messageService.add({severity: 'success', detail: 'Lançamento salvo com sucesso.'});
-      console.log(form)  
-      form.reset();
-      this.bookEntry = new BookEntry();
-    })
-    .catch(err => this.errorHandler.handle(err));
+  save(form: FormControl): void {
+    this.bookEntryService.add(this.bookEntry)
+      .then(() => {
+        this.messageService.add({ severity: 'success', detail: 'Lançamento salvo com sucesso.' });
+        form.reset();
+        this.bookEntry = new BookEntry();
+      })
+      .catch(err => this.errorHandler.handle(err));
   }
 
-  load() {
+  load(): Promise<void> {
     return this.categoryService.getAllCategories()
       .then(response => {
         this.categories = response.map(c => ({ label: c.name, value: c.id }));
       });
   }
 
-  loadPersons(){
+  loadPersons(): void {
     this.personService.getAllPerson().then(response => {
-      this.persons = response.map(p =>({label:p.name, value:p.id}));
-    })
+      this.persons = response.map(p => ({ label: p.name, value: p.id }));
+    });
   }
 }
