@@ -18,7 +18,7 @@ import { PersonModule } from './components/person/person.module';
     BrowserModule,
     BrowserAnimationsModule,
     // FormsModule,
-    // AppRoutingModule,
+    AppRoutingModule,
     HttpClientModule,
     CoreModule,
     BookEntryModule,
