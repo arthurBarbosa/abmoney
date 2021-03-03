@@ -1,3 +1,4 @@
+import { RouterModule } from '@angular/router';
 import { SharedModule } from './../shared/shared.module';
 import { TableModule } from 'primeng/table';
 import { DropdownModule } from 'primeng/dropdown';
@@ -33,9 +34,10 @@ import { CommonModule } from '@angular/common';
     SelectButtonModule,
     DropdownModule,
     CurrencyMaskModule,
+    RouterModule,
 
     SharedModule
   ],
   exports: [BookEntryCreateComponent, BookEntryListComponent],
 })
-export class BookEntryModule {}
+export class BookEntryModule { }

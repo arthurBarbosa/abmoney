@@ -2,7 +2,7 @@
   <form autocomplete="off" #f="ngForm" (ngSubmit)="save(f)">
     <div class="p-grid">
       <div class="p-col-12">
-        <h1>Novo Lançamento</h1>
+        <h1>{{ getEditing() ? 'Edição de': 'Novo'}} Lançamento</h1>
       </div>
 
       <div class="p-col-12">
@@ -58,8 +58,8 @@
 
       <div class="p-col-12">
         <button pButton type="submit" label="Salvar"></button>
-        <button pButton type="button" label="Novo" class="p-button-info"></button>
-        <a href="javascript:;">Voltar para a pesquisa</a>
+        <button pButton type="button" label="Novo" routerLink="['/lancamentos/novo']" class="p-button-info"></button>
+        <a routerLink="/lancamentos">Voltar para a pesquisa</a>
       </div>
     </div>
   </form>

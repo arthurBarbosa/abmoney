@@ -6,6 +6,7 @@ import { BookEntry } from './../../../model/book-entry';
 import { ErrorHandlerService } from './../../../core/error-handler.service';
 import { CategoryService } from './../../category/category.service';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-book-entry-create',
@@ -27,14 +28,51 @@ export class BookEntryCreateComponent implements OnInit {
     private errorHandler: ErrorHandlerService,
     private personService: PersonService,
     private bookEntryService: BookEntryService,
-    private messageService: MessageService) { }
+    private messageService: MessageService,
+    private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    const bookEntryId = this.route.snapshot.params['id'];
+
+    if (bookEntryId) {
+      this.loadBookEntryById(bookEntryId);
+    }
     this.load();
     this.loadPersons();
   }
 
+  loadBookEntryById(bookEntryId: number): void {
+    this.bookEntryService.getBookEntryById(bookEntryId)
+      .then(response => {
+        this.bookEntry = response;
+      })
+      .catch(error => this.errorHandler.handle(error));
+  }
+
+  getEditing(): boolean {
+    return Boolean(this.bookEntry.id);
+  }
+
   save(form: FormControl): void {
+    if (this.getEditing()) {
+      this.updateBookEntry(form);
+    }
+    else {
+      this.addBookEntry(form);
+    }
+
+  }
+
+  updateBookEntry(form: FormControl): void {
+    this.bookEntryService.update(this.bookEntry)
+      .then(response => {
+        this.bookEntry = response;
+        this.messageService.add({ severity: 'success', detail: 'Lançamento atualizado com sucesso.' });
+      })
+      .catch(error => this.errorHandler.handle(error));
+  }
+
+  addBookEntry(form: FormControl): void {
     this.bookEntryService.add(this.bookEntry)
       .then(() => {
         this.messageService.add({ severity: 'success', detail: 'Lançamento salvo com sucesso.' });
@@ -56,4 +94,6 @@ export class BookEntryCreateComponent implements OnInit {
       this.persons = response.map(p => ({ label: p.name, value: p.id }));
     });
   }
+
+
 }

@@ -67,7 +67,7 @@
               <span [style.color]="bookEntry.type === 'DESPESA' ? 'red' : 'blue'">{{ bookEntry.value | number: "1.2-2" }}</span>
             </td>
             <td class="col-acoes">
-              <a pButton icon="pi pi-pencil" pTooltip="Editar" tooltipPosition="top"></a>
+              <a pButton icon="pi pi-pencil" pTooltip="Editar" tooltipPosition="top" [routerLink]="['/lancamentos', bookEntry.id]"></a>
               <button pButton icon="pi pi-trash" pTooltip="Excluir" tooltipPosition="top" (click)="confirm(bookEntry)"></button>
             </td>
           </tr>
@@ -76,7 +76,7 @@
 
     </div>
     <div class="p-col-12">
-      <a pButton label="Novo Lançamento"></a>
+      <a pButton label="Novo Lançamento" routerLink="/lancamentos/novo"></a>
     </div>
   </div>
 </div>

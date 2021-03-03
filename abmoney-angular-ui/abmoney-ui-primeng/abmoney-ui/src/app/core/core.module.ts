@@ -1,3 +1,5 @@
+import { RouterModule } from '@angular/router';
+import { AppRoutingModule } from './../app-routing.module';
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { registerLocaleData } from '@angular/common';
@@ -20,6 +22,8 @@ registerLocaleData(localePt);
   imports: [
     CommonModule,
     ConfirmDialogModule,
+
+    RouterModule,
     ToastModule],
   exports: [
     NavComponent,
