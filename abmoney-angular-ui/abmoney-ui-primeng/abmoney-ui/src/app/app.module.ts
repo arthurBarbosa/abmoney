@@ -1,3 +1,4 @@
+import { SecurityModule } from './security/security.module';
 import { BookEntryRoutingModule } from './components/book-entry/book-entry-routing.module';
 
 import { CoreModule } from './core/core.module';
@@ -24,6 +25,7 @@ import { PageNotFoundComponent } from './components/not-found/page-not-found/pag
     CoreModule,
     BookEntryModule,
     PersonModule,
+    SecurityModule,
 
   ],
   providers: [
