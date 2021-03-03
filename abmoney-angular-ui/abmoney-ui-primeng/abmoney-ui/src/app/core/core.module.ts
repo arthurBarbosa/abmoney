@@ -1,3 +1,5 @@
+import { CategoryService } from './../components/category/category.service';
+import { PageNotFoundComponent } from './../components/not-found/page-not-found/page-not-found.component';
 import { Title } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './../app-routing.module';
@@ -19,7 +21,7 @@ import { ErrorHandlerService } from './error-handler.service';
 registerLocaleData(localePt);
 
 @NgModule({
-  declarations: [NavComponent],
+  declarations: [NavComponent, PageNotFoundComponent],
   imports: [
     CommonModule,
     ConfirmDialogModule,
@@ -33,6 +35,7 @@ registerLocaleData(localePt);
 
   providers: [
     MessageService,
+    CategoryService,
     ConfirmationService,
 
     ErrorHandlerService,

@@ -112,6 +112,8 @@ export class BookEntryCreateComponent implements OnInit {
 
   }
 
+
+
   updateTitleUpdate(): void {
     this.title.setTitle(`Edição de lançamento: ${this.bookEntry?.description}`);
   }

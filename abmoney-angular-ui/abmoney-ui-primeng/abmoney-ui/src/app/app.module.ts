@@ -1,3 +1,4 @@
+import { BookEntryRoutingModule } from './components/book-entry/book-entry-routing.module';
 
 import { CoreModule } from './core/core.module';
 import { NgModule } from '@angular/core';
@@ -14,18 +15,15 @@ import { PersonModule } from './components/person/person.module';
 import { PageNotFoundComponent } from './components/not-found/page-not-found/page-not-found.component';
 
 @NgModule({
-  declarations: [AppComponent, PageNotFoundComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    // FormsModule,
     AppRoutingModule,
     HttpClientModule,
     CoreModule,
     BookEntryModule,
     PersonModule,
-
-    // CurrencyMaskModule,
 
   ],
   providers: [

@@ -113,4 +113,34 @@ export class PersonService {
     return this.http.post<Person>(this.baseUrl, person, { headers }).toPromise();
   }
 
+  updatePerson(person: Person): Promise<Person> {
+
+    const headers = new HttpHeaders().append(
+      'Authorization',
+      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MTQ4Nzk1NzYsInVzZXJfbmFtZSI6ImphY2tAZ21haWwuY29tIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9PUEVSQVRPUiIsIlJPTEVfQURNSU4iXSwianRpIjoiNjE5YTA3M2ItYWNiZC00Y2ZlLWJhODktNDBhNWUxMGM4MTY1IiwiY2xpZW50X2lkIjoibXlhcHBuYW1lMTIzIiwic2NvcGUiOlsicmVhZCIsIndyaXRlIl19.a8fHrErl3oKVy6k5JCmEfCEnIHdeYIqaKQB-c5FzBQE'
+    ).append('Content-Type', 'application/json');
+
+    return this.http.put(`${this.baseUrl}/${person.id}`, JSON.stringify(person), { headers })
+      .toPromise()
+      .then(response => {
+        const personUpdate = response as Person;
+        return personUpdate;
+      });
+  }
+
+  getPersonById(id: number): Promise<Person> {
+    const headers = new HttpHeaders().append(
+      'Authorization',
+      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MTQ4Nzk1NzYsInVzZXJfbmFtZSI6ImphY2tAZ21haWwuY29tIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9PUEVSQVRPUiIsIlJPTEVfQURNSU4iXSwianRpIjoiNjE5YTA3M2ItYWNiZC00Y2ZlLWJhODktNDBhNWUxMGM4MTY1IiwiY2xpZW50X2lkIjoibXlhcHBuYW1lMTIzIiwic2NvcGUiOlsicmVhZCIsIndyaXRlIl19.a8fHrErl3oKVy6k5JCmEfCEnIHdeYIqaKQB-c5FzBQE'
+    ).append('Content-Type', 'application/json');
+
+    return this.http.get(`${this.baseUrl}/${id}`, { headers })
+      .toPromise()
+      .then(response => {
+        const person = response as Person;
+
+        return person;
+      });
+  }
+
 }

@@ -16,7 +16,7 @@ import { PersonCreateComponent } from './person-create/person-create.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PersonListComponent } from './person-list/person-list.component';
-
+import { PersonRoutingModule } from './person-routing.module';
 
 
 @NgModule({
@@ -35,7 +35,8 @@ import { PersonListComponent } from './person-list/person-list.component';
     DropdownModule,
     InputMaskModule,
     RouterModule,
-    SharedModule
+    SharedModule,
+    PersonRoutingModule
   ],
   exports: [PersonCreateComponent, PersonGridComponent, PersonListComponent]
 })

@@ -1,4 +1,5 @@
-import { RouterModule } from '@angular/router';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { SharedModule } from './../shared/shared.module';
 import { TableModule } from 'primeng/table';
 import { DropdownModule } from 'primeng/dropdown';
@@ -13,8 +14,10 @@ import { FormsModule } from '@angular/forms';
 import { BookEntryGridComponent } from './book-entry-grid/book-entry-grid.component';
 import { BookEntryListComponent } from './book-entry-list/book-entry-list.component';
 import { BookEntryCreateComponent } from './book-entry-create/book-entry-create.component';
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
+import { LancamentosRoutingModule } from './lancamentos-routing.module';
+
+
 
 @NgModule({
   declarations: [
@@ -34,8 +37,8 @@ import { CommonModule } from '@angular/common';
     SelectButtonModule,
     DropdownModule,
     CurrencyMaskModule,
-    RouterModule,
-
+    // BookEntryRoutingModule,
+    LancamentosRoutingModule,
     SharedModule
   ],
   exports: [BookEntryCreateComponent, BookEntryListComponent],

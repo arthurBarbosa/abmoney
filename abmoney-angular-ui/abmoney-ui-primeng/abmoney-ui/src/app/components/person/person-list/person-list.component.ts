@@ -1,3 +1,4 @@
+import { Title } from '@angular/platform-browser';
 import { ErrorHandlerService } from './../../../core/error-handler.service';
 import { Table } from 'primeng/table';
 import { LazyLoadEvent, ConfirmationService, MessageService } from 'primeng/api';
@@ -21,9 +22,13 @@ export class PersonListComponent implements OnInit {
     private personService: PersonService,
     private confirmation: ConfirmationService,
     private messageService: MessageService,
-    private errorHandler: ErrorHandlerService) { }
+    private errorHandler: ErrorHandlerService,
+    private title: Title) { }
 
-  ngOnInit(): void { this.list(); }
+  ngOnInit(): void {
+    this.title.setTitle('Pesquisa de pesssoas');
+    this.list();
+  }
 
   list(page = 0): void {
     this.person.page = page;

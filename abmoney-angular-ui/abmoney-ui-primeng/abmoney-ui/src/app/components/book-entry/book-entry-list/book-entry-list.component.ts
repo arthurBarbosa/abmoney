@@ -1,7 +1,6 @@
 import { ErrorHandlerService } from './../../../core/error-handler.service';
 import { BookEntryService, LancamentoFiltro } from './../book-entry.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Observable } from 'rxjs';
 import { LazyLoadEvent, MessageService, ConfirmationService } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { Title } from '@angular/platform-browser';
