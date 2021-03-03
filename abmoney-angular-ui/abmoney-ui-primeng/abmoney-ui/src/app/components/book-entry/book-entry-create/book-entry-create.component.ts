@@ -1,3 +1,4 @@
+import { Title } from '@angular/platform-browser';
 import { FormControl } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { BookEntryService } from './../book-entry.service';
@@ -30,10 +31,13 @@ export class BookEntryCreateComponent implements OnInit {
     private bookEntryService: BookEntryService,
     private messageService: MessageService,
     private route: ActivatedRoute,
-    private router: Router) { }
+    private router: Router,
+    private title: Title) { }
 
   ngOnInit(): void {
     const bookEntryId = this.route.snapshot.params['id'];
+
+    this.title.setTitle('Novo lançamento');
 
     if (bookEntryId) {
       this.loadBookEntryById(bookEntryId);
@@ -46,6 +50,7 @@ export class BookEntryCreateComponent implements OnInit {
     this.bookEntryService.getBookEntryById(bookEntryId)
       .then(response => {
         this.bookEntry = response;
+        this.updateTitleUpdate();
       })
       .catch(error => this.errorHandler.handle(error));
   }
@@ -69,6 +74,7 @@ export class BookEntryCreateComponent implements OnInit {
       .then(response => {
         this.bookEntry = response;
         this.messageService.add({ severity: 'success', detail: 'Lançamento atualizado com sucesso.' });
+        this.updateTitleUpdate();
       })
       .catch(error => this.errorHandler.handle(error));
   }
@@ -104,5 +110,9 @@ export class BookEntryCreateComponent implements OnInit {
     }.bind(this), 1);
     this.router.navigate(['/lancamentos/novo']);
 
+  }
+
+  updateTitleUpdate(): void {
+    this.title.setTitle(`Edição de lançamento: ${this.bookEntry?.description}`);
   }
 }

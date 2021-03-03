@@ -1,3 +1,4 @@
+import { Title } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './../app-routing.module';
 import { NgModule, LOCALE_ID } from '@angular/core';
@@ -29,6 +30,7 @@ registerLocaleData(localePt);
     NavComponent,
     ConfirmDialogModule,
     ToastModule],
+
   providers: [
     MessageService,
     ConfirmationService,
@@ -36,6 +38,7 @@ registerLocaleData(localePt);
     ErrorHandlerService,
     BookEntryService,
     PersonService,
+    Title,
     { provide: LOCALE_ID, useValue: 'pt-BR' }
   ]
 })

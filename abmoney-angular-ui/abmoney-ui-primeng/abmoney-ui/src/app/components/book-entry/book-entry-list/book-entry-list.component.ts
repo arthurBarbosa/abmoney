@@ -4,6 +4,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
 import { LazyLoadEvent, MessageService, ConfirmationService } from 'primeng/api';
 import { Table } from 'primeng/table';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-book-entry-list',
@@ -20,9 +21,13 @@ export class BookEntryListComponent implements OnInit {
     private bookEntryService: BookEntryService,
     private messageService: MessageService,
     private confirmation: ConfirmationService,
-    private errorHandler: ErrorHandlerService) { }
+    private errorHandler: ErrorHandlerService,
+    private title: Title) { }
 
-  ngOnInit(): void { this.list(); }
+  ngOnInit(): void {
+    this.title.setTitle('Pesquisa de lançamentos');
+    this.list();
+  }
 
   list(page = 0): void {
     this.filter.page = page;
