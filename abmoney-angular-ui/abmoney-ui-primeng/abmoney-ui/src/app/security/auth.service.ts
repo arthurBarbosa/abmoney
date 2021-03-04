@@ -44,6 +44,7 @@ export class AuthService {
   private storeToken(token: string): void {
     this.jwtPayload = this.jwtHelp.decodeToken(token);
     localStorage.setItem('token', token);
+    console.log(this.jwtPayload);
   }
 
   private loadToken(): void {

@@ -8,7 +8,7 @@
   </div>
 
   <ul class="navbar-menu" [hidden]="!show">
-    <li class="navbar-usuario" (click)="showMenu()">José da Silva</li>
+    <li class="navbar-usuario" (click)="showMenu()">{{getNameUserLogged()}}</li>
     <li class="navbar-menuitem" routerLinkActive="active"><a routerLink="/lancamentos">Lançamentos</a></li>
     <li class="navbar-menuitem" routerLinkActive="active"><a routerLink="/pessoas">Pessoas</a></li>
     <li class="navbar-menuitem" routerLinkActive="active"><a href="#">Logout</a></li>

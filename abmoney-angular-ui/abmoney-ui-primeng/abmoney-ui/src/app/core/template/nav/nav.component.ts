@@ -1,3 +1,4 @@
+import { AuthService } from './../../../security/auth.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,15 +8,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavComponent implements OnInit {
 
-  show:boolean = false;
+  show: boolean = false;
 
-  constructor() { }
+  constructor(private auth: AuthService) { }
 
   ngOnInit(): void {
   }
 
-showMenu(): void{
-  this.show = !this.show;
-}
+  showMenu(): void {
+    this.show = !this.show;
+  }
+
+  getNameUserLogged(): string {
+    return this.auth.jwtPayload?.user_name;
+  }
 
 }
