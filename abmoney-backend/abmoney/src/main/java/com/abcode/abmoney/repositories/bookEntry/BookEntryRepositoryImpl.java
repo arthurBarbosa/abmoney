@@ -1,6 +1,7 @@
 package com.abcode.abmoney.repositories.bookEntry;
 
 import com.abcode.abmoney.dto.StaticalReleaseByCategoryDTO;
+import com.abcode.abmoney.dto.StaticalReleaseByDayDTO;
 import com.abcode.abmoney.entities.BookEntry;
 import com.abcode.abmoney.entities.BookEntry_;
 import com.abcode.abmoney.repositories.filter.BookEntryFilter;
@@ -61,6 +62,34 @@ public class BookEntryRepositoryImpl implements BookEntryRepositoryQuery {
         criteriaQuery.groupBy(root.get(BookEntry_.CATEGORY));
 
         TypedQuery<StaticalReleaseByCategoryDTO> typedQuery = manager.createQuery(criteriaQuery);
+
+        return typedQuery.getResultList();
+    }
+
+    @Override
+    public List<StaticalReleaseByDayDTO> byDay(LocalDate month) {
+        CriteriaBuilder criteriaBuilder = manager.getCriteriaBuilder();
+
+        CriteriaQuery<StaticalReleaseByDayDTO> criteriaQuery = criteriaBuilder.createQuery(StaticalReleaseByDayDTO.class);
+
+        Root<BookEntry> root = criteriaQuery.from(BookEntry.class);
+
+        criteriaQuery.select(criteriaBuilder.construct(StaticalReleaseByDayDTO.class,
+                root.get(BookEntry_.TYPE),
+                root.get(BookEntry_.DUE_DATE),
+                criteriaBuilder.sum(root.get(BookEntry_.VALUE))));
+
+        LocalDate firstDay = month.withDayOfMonth(1);
+        LocalDate finalDay = month.withDayOfMonth(month.lengthOfMonth());
+
+        criteriaQuery.where(
+                criteriaBuilder.greaterThanOrEqualTo(root.get(BookEntry_.DUE_DATE), firstDay),
+                criteriaBuilder.lessThanOrEqualTo(root.get(BookEntry_.DUE_DATE), finalDay));
+
+        criteriaQuery.groupBy(root.get(BookEntry_.TYPE),
+                root.get(BookEntry_.DUE_DATE));
+
+        TypedQuery<StaticalReleaseByDayDTO> typedQuery = manager.createQuery(criteriaQuery);
 
         return typedQuery.getResultList();
     }

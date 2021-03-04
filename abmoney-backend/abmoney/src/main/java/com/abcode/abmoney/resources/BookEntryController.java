@@ -2,6 +2,7 @@ package com.abcode.abmoney.resources;
 
 import com.abcode.abmoney.dto.BookEntryDTO;
 import com.abcode.abmoney.dto.StaticalReleaseByCategoryDTO;
+import com.abcode.abmoney.dto.StaticalReleaseByDayDTO;
 import com.abcode.abmoney.entities.BookEntry;
 import com.abcode.abmoney.repositories.BookEntryRepository;
 import com.abcode.abmoney.repositories.filter.BookEntryFilter;
@@ -43,6 +44,11 @@ public class BookEntryController {
     @GetMapping(value = "/statistics-by-category")
     public ResponseEntity<List<StaticalReleaseByCategoryDTO>> statisticsByCategory(){
         return ResponseEntity.ok().body(bookEntryRepository.byCategory(LocalDate.now()));
+    }
+
+    @GetMapping(value = "/statistics-by-day")
+    public ResponseEntity<List<StaticalReleaseByDayDTO>> statisticsByDay(){
+        return ResponseEntity.ok().body(bookEntryRepository.byDay(LocalDate.now().withMonth(2)));
     }
 
     @GetMapping(value = "/filter")
