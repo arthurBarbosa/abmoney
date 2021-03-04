@@ -1,3 +1,4 @@
+import { AuthGuard } from './security/auth.guard';
 import { SecurityModule } from './security/security.module';
 import { BookEntryRoutingModule } from './components/book-entry/book-entry-routing.module';
 
@@ -29,6 +30,7 @@ import { PageNotFoundComponent } from './components/not-found/page-not-found/pag
 
   ],
   providers: [
+    AuthGuard
   ],
   bootstrap: [AppComponent]
 })

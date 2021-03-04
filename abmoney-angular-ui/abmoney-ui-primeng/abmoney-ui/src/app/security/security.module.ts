@@ -1,3 +1,4 @@
+import { AuthGuard } from './auth.guard';
 import { JwtModule, JwtHelperService } from '@auth0/angular-jwt';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
@@ -35,7 +36,8 @@ export function tokenGetter(): string {
       provide: HTTP_INTERCEPTORS,
       useClass: AppHttpInterceptor,
       multi: true
-    }
+    },
+    AuthGuard
   ]
 })
 export class SecurityModule { }

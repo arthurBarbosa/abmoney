@@ -24,7 +24,7 @@ export class NavComponent implements OnInit {
   }
 
   hasAuthority(authorite: string): boolean {
-    return this.auth.hasAuthority(authorite);
+    return this.auth.hasAnyPermissions(authorite);
   }
 
 }

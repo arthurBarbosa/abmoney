@@ -72,6 +72,15 @@ export class AuthService {
     return this.jwtPayload && this.jwtPayload.authorities.includes(authority);
   }
 
+  hasAnyPermissions(roles): boolean {
+    for (const role of roles) {
+      if (this.hasAuthority(role)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   getRefreshTokenLocalStorage(): string {
     return localStorage.getItem('refresh_token');
   }

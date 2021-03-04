@@ -1,3 +1,4 @@
+import { AuthService } from './../../../security/auth.service';
 import { ErrorHandlerService } from './../../../core/error-handler.service';
 import { BookEntryService, LancamentoFiltro } from './../book-entry.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
@@ -21,7 +22,8 @@ export class BookEntryListComponent implements OnInit {
     private messageService: MessageService,
     private confirmation: ConfirmationService,
     private errorHandler: ErrorHandlerService,
-    private title: Title) { }
+    private title: Title,
+    public auth: AuthService) { }
 
   ngOnInit(): void {
     this.title.setTitle('Pesquisa de lançamentos');
