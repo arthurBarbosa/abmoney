@@ -117,7 +117,7 @@
 					<compilerArguments>
 						<processor>org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor</processor>
 					</compilerArguments>
-				
+
 			</plugin>
 
 

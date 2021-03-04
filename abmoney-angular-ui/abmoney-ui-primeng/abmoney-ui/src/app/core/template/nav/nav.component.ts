@@ -23,4 +23,8 @@ export class NavComponent implements OnInit {
     return this.auth.jwtPayload?.user_name;
   }
 
+  hasAuthority(authorite: string): boolean {
+    return this.auth.hasAuthority(authorite);
+  }
+
 }

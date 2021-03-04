@@ -54,4 +54,8 @@ export class AuthService {
       this.storeToken(token);
     }
   }
+
+  hasAuthority(authority: string): boolean {
+    return this.jwtPayload && this.jwtPayload.authorities.includes(authority);
+  }
 }
