@@ -20,33 +20,8 @@ export class BookEntryService {
 
   constructor(private http: HttpClient) { }
 
-  // read(filter: LancamentoFiltro): Observable<any[]> {
-  //   const headers = new HttpHeaders().append(
-  //     'Authorization',
-  //     'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MTI0NDMxMDIsInVzZXJfbmFtZSI6ImFubmFAZ21haWwuY29tIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9PUEVSQVRPUiJdLCJqdGkiOiJlYmFiODgzNi1mMTAzLTQ2OTgtOTA0YS1jMzNmNTc5NTY2YzYiLCJjbGllbnRfaWQiOiJteWFwcG5hbWUxMjMiLCJzY29wZSI6WyJyZWFkIiwid3JpdGUiXX0.PqmXt-ZyiMDoBTHAD_8OulPW3SCJ1p5q8D9zmkjirdU'
-  //   );
-
-  //   let params = new HttpParams();
-  //   // params.set('page', filter.page);
-  //   // params.set('size', filter.size);
-
-  //   if (filter.description) {
-  //     params = params.set('description', filter.description);
-  //   }
-
-  //   return this.http
-  //     .get<any[]>(`${this.baseUrl}/filter?${params.toString()}`, {
-  //       headers,
-  //       params,
-  //     })
-  //     .pipe(map((obj) => obj));
-  // }
-
   getBookEntry(filter: LancamentoFiltro): Promise<any> {
-    const headers = new HttpHeaders().append(
-      'Authorization',
-      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MTQ4Nzk1NzYsInVzZXJfbmFtZSI6ImphY2tAZ21haWwuY29tIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9PUEVSQVRPUiIsIlJPTEVfQURNSU4iXSwianRpIjoiNjE5YTA3M2ItYWNiZC00Y2ZlLWJhODktNDBhNWUxMGM4MTY1IiwiY2xpZW50X2lkIjoibXlhcHBuYW1lMTIzIiwic2NvcGUiOlsicmVhZCIsIndyaXRlIl19.a8fHrErl3oKVy6k5JCmEfCEnIHdeYIqaKQB-c5FzBQE'
-    );
+
     let params = new HttpParams()
 
       .set('page', filter.page.toString())
@@ -71,7 +46,7 @@ export class BookEntryService {
     }
 
     return this.http
-      .get(`${this.baseUrl}/filter?`, { headers, params })
+      .get(`${this.baseUrl}/filter?`, { params })
       .toPromise()
       .then((response) => {
         const bookEntry = response['content'];
@@ -86,31 +61,20 @@ export class BookEntryService {
 
   delete(id: number): Promise<void> {
 
-    const headers = new HttpHeaders().append(
-      'Authorization',
-      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MTQ4Nzk1NzYsInVzZXJfbmFtZSI6ImphY2tAZ21haWwuY29tIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9PUEVSQVRPUiIsIlJPTEVfQURNSU4iXSwianRpIjoiNjE5YTA3M2ItYWNiZC00Y2ZlLWJhODktNDBhNWUxMGM4MTY1IiwiY2xpZW50X2lkIjoibXlhcHBuYW1lMTIzIiwic2NvcGUiOlsicmVhZCIsIndyaXRlIl19.a8fHrErl3oKVy6k5JCmEfCEnIHdeYIqaKQB-c5FzBQE'
-    );
-
-    return this.http.delete(`${this.baseUrl}/${id}`, { headers })
+    return this.http.delete(`${this.baseUrl}/${id}`)
       .toPromise()
       .then(() => null);
   }
 
   add(bookEntry: BookEntry): Promise<BookEntry> {
-    const headers = new HttpHeaders().append(
-      'Authorization',
-      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MTQ4Nzk1NzYsInVzZXJfbmFtZSI6ImphY2tAZ21haWwuY29tIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9PUEVSQVRPUiIsIlJPTEVfQURNSU4iXSwianRpIjoiNjE5YTA3M2ItYWNiZC00Y2ZlLWJhODktNDBhNWUxMGM4MTY1IiwiY2xpZW50X2lkIjoibXlhcHBuYW1lMTIzIiwic2NvcGUiOlsicmVhZCIsIndyaXRlIl19.a8fHrErl3oKVy6k5JCmEfCEnIHdeYIqaKQB-c5FzBQE'
-    ).append('Content-Type', 'application/json');
+    const headers = new HttpHeaders().append('Content-Type', 'application/json');
 
     return this.http.post<BookEntry>(this.baseUrl, bookEntry, { headers }).toPromise();
   }
 
   update(bookEntry: BookEntry): Promise<BookEntry> {
 
-    const headers = new HttpHeaders().append(
-      'Authorization',
-      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MTQ4Nzk1NzYsInVzZXJfbmFtZSI6ImphY2tAZ21haWwuY29tIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9PUEVSQVRPUiIsIlJPTEVfQURNSU4iXSwianRpIjoiNjE5YTA3M2ItYWNiZC00Y2ZlLWJhODktNDBhNWUxMGM4MTY1IiwiY2xpZW50X2lkIjoibXlhcHBuYW1lMTIzIiwic2NvcGUiOlsicmVhZCIsIndyaXRlIl19.a8fHrErl3oKVy6k5JCmEfCEnIHdeYIqaKQB-c5FzBQE'
-    ).append('Content-Type', 'application/json');
+    const headers = new HttpHeaders().append('Content-Type', 'application/json');
 
     return this.http.put(`${this.baseUrl}/${bookEntry.id}`,
       JSON.stringify(bookEntry), { headers })
@@ -126,12 +90,7 @@ export class BookEntryService {
   }
 
   getBookEntryById(id: number): Promise<BookEntry> {
-    const headers = new HttpHeaders().append(
-      'Authorization',
-      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MTQ4Nzk1NzYsInVzZXJfbmFtZSI6ImphY2tAZ21haWwuY29tIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9PUEVSQVRPUiIsIlJPTEVfQURNSU4iXSwianRpIjoiNjE5YTA3M2ItYWNiZC00Y2ZlLWJhODktNDBhNWUxMGM4MTY1IiwiY2xpZW50X2lkIjoibXlhcHBuYW1lMTIzIiwic2NvcGUiOlsicmVhZCIsIndyaXRlIl19.a8fHrErl3oKVy6k5JCmEfCEnIHdeYIqaKQB-c5FzBQE'
-    );
-
-    return this.http.get(`${this.baseUrl}/${id}`, { headers })
+    return this.http.get(`${this.baseUrl}/${id}`)
       .toPromise()
       .then(response => {
         const bookEntry = response as BookEntry;
