@@ -1,6 +1,8 @@
 package com.abcode.abmoney.repositories.bookEntry;
 
+import com.abcode.abmoney.dto.StaticalReleaseByCategoryDTO;
 import com.abcode.abmoney.entities.BookEntry;
+import com.abcode.abmoney.entities.BookEntry_;
 import com.abcode.abmoney.repositories.filter.BookEntryFilter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -13,6 +15,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +37,32 @@ public class BookEntryRepositoryImpl implements BookEntryRepositoryQuery {
         addRestrictionPagination(query, pageable);
 
         return new PageImpl<>(query.getResultList(), pageable, total(bookEntryFilter));
+    }
+
+    @Override
+    public List<StaticalReleaseByCategoryDTO> byCategory(LocalDate month) {
+        CriteriaBuilder criteriaBuilder = manager.getCriteriaBuilder();
+
+        CriteriaQuery<StaticalReleaseByCategoryDTO> criteriaQuery = criteriaBuilder.createQuery(StaticalReleaseByCategoryDTO.class);
+
+        Root<BookEntry> root = criteriaQuery.from(BookEntry.class);
+
+        criteriaQuery.select(criteriaBuilder.construct(StaticalReleaseByCategoryDTO.class,
+                root.get(BookEntry_.CATEGORY),
+                criteriaBuilder.sum(root.get(BookEntry_.VALUE))));
+
+        LocalDate firstDay = month.withDayOfMonth(1);
+        LocalDate finalDay = month.withDayOfMonth(month.lengthOfMonth());
+
+        criteriaQuery.where(
+                criteriaBuilder.greaterThanOrEqualTo(root.get(BookEntry_.DUE_DATE), firstDay),
+                criteriaBuilder.lessThanOrEqualTo(root.get(BookEntry_.DUE_DATE), finalDay));
+
+        criteriaQuery.groupBy(root.get(BookEntry_.CATEGORY));
+
+        TypedQuery<StaticalReleaseByCategoryDTO> typedQuery = manager.createQuery(criteriaQuery);
+
+        return typedQuery.getResultList();
     }
 
 

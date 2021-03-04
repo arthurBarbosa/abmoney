@@ -1,7 +1,9 @@
 package com.abcode.abmoney.resources;
 
 import com.abcode.abmoney.dto.BookEntryDTO;
+import com.abcode.abmoney.dto.StaticalReleaseByCategoryDTO;
 import com.abcode.abmoney.entities.BookEntry;
+import com.abcode.abmoney.repositories.BookEntryRepository;
 import com.abcode.abmoney.repositories.filter.BookEntryFilter;
 import com.abcode.abmoney.services.BookEntryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -22,6 +25,9 @@ public class BookEntryController {
 
     @Autowired
     private BookEntryService service;
+
+    @Autowired
+    private BookEntryRepository bookEntryRepository;
 
     @GetMapping
     public ResponseEntity<Page<BookEntryDTO>> findAllPaged(@RequestParam(value = "page", defaultValue = "0") Integer page,
@@ -32,6 +38,11 @@ public class BookEntryController {
         PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
 
         return ResponseEntity.ok().body(service.findAllPaged(pageRequest));
+    }
+
+    @GetMapping(value = "/statistics-by-category")
+    public ResponseEntity<List<StaticalReleaseByCategoryDTO>> statisticsByCategory(){
+        return ResponseEntity.ok().body(bookEntryRepository.byCategory(LocalDate.now()));
     }
 
     @GetMapping(value = "/filter")
