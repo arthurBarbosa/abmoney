@@ -27,4 +27,7 @@ export class NavComponent implements OnInit {
     return this.auth.hasAuthority(authorite);
   }
 
+  getNewAccesToken() {
+    this.auth.getNewAccessToken();
+  }
 }
