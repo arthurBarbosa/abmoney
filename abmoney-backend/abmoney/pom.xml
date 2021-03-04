@@ -81,7 +81,7 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-jpamodelgen</artifactId>
-			<version>5.3.7.Final</version>
+<!--			<version>5.3.7.Final</version>-->
 		</dependency>
 
 		<dependency>
@@ -111,13 +111,13 @@
 					</excludes>
 				</configuration>
 
-				<configuration>
+
 					<source>11</source>
 					<target>11</target>
 					<compilerArguments>
 						<processor>org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor</processor>
 					</compilerArguments>
-				</configuration>
+				
 			</plugin>
 
 

@@ -1,3 +1,4 @@
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
@@ -7,8 +8,14 @@ import { Injectable } from '@angular/core';
 export class AuthService {
 
   oauthTokenUrl = 'http://localhost:8080/oauth/token';
+  jwtPayload: any;
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private jwtHelp: JwtHelperService
+  ) {
+    this.loadToken();
+  }
 
   login(username: string, password: string): Promise<void> {
     const headers = new HttpHeaders()
@@ -21,9 +28,29 @@ export class AuthService {
       .toPromise()
       .then(response => {
         console.log(response);
+        this.storeToken(response['access_token']);
+
       })
       .catch(response => {
-        console.log(response);
+        if (response.status === 400) {
+          if (response.error['error'] === 'invalid_grant') {
+            return Promise.reject('Usuário ou senha inválida');
+          }
+        }
+        return Promise.reject(response);
       });
+  }
+
+  private storeToken(token: string): void {
+    this.jwtPayload = this.jwtHelp.decodeToken(token);
+    localStorage.setItem('token', token);
+  }
+
+  private loadToken(): void {
+    const token = localStorage.getItem('token');
+
+    if (token) {
+      this.storeToken(token);
+    }
   }
 }

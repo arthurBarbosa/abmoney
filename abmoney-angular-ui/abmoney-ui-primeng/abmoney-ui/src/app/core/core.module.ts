@@ -12,6 +12,7 @@ import { MessageService, ConfirmationService } from 'primeng/api';
 import { NavComponent } from './template/nav/nav.component';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { JwtModule, JwtHelperService } from '@auth0/angular-jwt';
 
 
 import { PersonService } from './../components/person/person.service';
@@ -39,6 +40,7 @@ registerLocaleData(localePt);
     CategoryService,
     ConfirmationService,
 
+    JwtHelperService,
     ErrorHandlerService,
     BookEntryService,
     PersonService,
