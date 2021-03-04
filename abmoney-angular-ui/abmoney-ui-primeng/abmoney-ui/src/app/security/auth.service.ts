@@ -9,6 +9,7 @@ export class AuthService {
 
   oauthTokenUrl = 'http://localhost:8080/oauth/token';
   jwtPayload: any;
+  nameUserLogged: string;
 
   constructor(
     private http: HttpClient,
@@ -30,7 +31,7 @@ export class AuthService {
         console.log(response);
         this.storeToken(response['access_token']);
         this.storeRefreshToken(response['refresh_token']);
-
+        this.nameUserLogged = response['name'];
       })
       .catch(response => {
         if (response.status === 400) {
@@ -52,6 +53,11 @@ export class AuthService {
 
     localStorage.setItem('refresh_token', refreshToken);
     console.log(this.jwtPayload);
+  }
+
+  isAccessTokenInvalid(): boolean {
+    const token = localStorage.getItem('token');
+    return !token || this.jwtHelp.isTokenExpired(token);
   }
 
   private loadToken(): void {

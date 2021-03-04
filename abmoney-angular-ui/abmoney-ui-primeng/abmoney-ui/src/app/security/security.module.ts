@@ -5,6 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoginFormComponent } from './login-form/login-form.component';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AppHttpInterceptor } from './app-http-interceptor';
 
 export function tokenGetter(): string {
   return localStorage.getItem('token');
@@ -28,7 +30,12 @@ export function tokenGetter(): string {
     ButtonModule,
   ],
   providers: [
-    JwtHelperService
+    JwtHelperService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AppHttpInterceptor,
+      multi: true
+    }
   ]
 })
 export class SecurityModule { }

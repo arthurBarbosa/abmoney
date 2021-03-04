@@ -20,14 +20,11 @@ export class NavComponent implements OnInit {
   }
 
   getNameUserLogged(): string {
-    return this.auth.jwtPayload?.user_name;
+    return this.auth.nameUserLogged;
   }
 
   hasAuthority(authorite: string): boolean {
     return this.auth.hasAuthority(authorite);
   }
 
-  getNewAccesToken() {
-    this.auth.getNewAccessToken();
-  }
 }
