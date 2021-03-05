@@ -50,13 +50,10 @@ export class AuthService {
   private storeToken(token: string): void {
     this.jwtPayload = this.jwtHelp.decodeToken(token);
     localStorage.setItem('token', token);
-    console.log(this.jwtPayload);
   }
 
   private storeRefreshToken(refreshToken: string): void {
-
     localStorage.setItem('refresh_token', refreshToken);
-    console.log(this.jwtPayload);
   }
 
   isAccessTokenInvalid(): boolean {
@@ -66,11 +63,21 @@ export class AuthService {
 
   getRefreshTokenLocalStorage(): string {
     const refreshToken = localStorage.getItem('refresh_token');
-    if (this.jwtHelp.isTokenExpired(refreshToken)) {
-      this.router.navigate(['login']);
-      this.messageService.add({ severity: 'error', detail: 'Sua sessão expirou. Faça login novamente.' });
-    }
+    // if (this.jwtHelp.isTokenExpired(refreshToken)) {
+    //   this.router.navigate(['login']);
+    //   this.messageService.add({ severity: 'error', detail: 'Sua sessão expirou. Faça login novamente.' });
+    // }
     return localStorage.getItem('refresh_token');
+  }
+
+  lougout(): void {
+    const token = localStorage.getItem('token');
+    if (!this.jwtHelp.isTokenExpired(token)) {
+      localStorage.removeItem('token');
+      localStorage.removeItem('refresh_token');
+      this.router.navigate(['login']);
+
+    }
   }
 
   private loadToken(): void {
@@ -106,10 +113,8 @@ export class AuthService {
     return this.http.post(this.oauthTokenUrl, body, { headers }).toPromise()
       .then(response => {
         this.storeToken(response['access_token']);
-        console.log('Novo access token criado');
       })
       .catch(response => {
-        console.log('Erro ao renovar token.', response);
         return Promise.resolve(null);
       });
   }

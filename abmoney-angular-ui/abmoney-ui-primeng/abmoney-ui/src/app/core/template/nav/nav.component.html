@@ -11,6 +11,6 @@
     <li class="navbar-usuario" (click)="showMenu()">{{getNameUserLogged()}}</li>
     <li *ngIf="hasAuthority(['ROLE_ADMIN', 'ROLE_OPERATOR'])" class="navbar-menuitem" routerLinkActive="active"><a routerLink="/lancamentos">Lançamentos</a></li>
     <li *ngIf="hasAuthority(['ROLE_ADMIN', 'ROLE_OPERATOR'])" class="navbar-menuitem" routerLinkActive="active"><a routerLink="/pessoas">Pessoas</a></li>
-    <li class="navbar-menuitem" routerLinkActive="active"><a href="#">Logout</a></li>
+    <li class="navbar-menuitem" routerLinkActive="active" (click)="logout()"><a href="#">Logout</a></li>
   </ul>
 </nav>

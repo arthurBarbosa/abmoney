@@ -27,4 +27,8 @@ export class NavComponent implements OnInit {
     return this.auth.hasAnyPermissions(authorite);
   }
 
+  logout(): void {
+    this.auth.lougout();
+  }
+
 }
