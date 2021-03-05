@@ -1,3 +1,4 @@
+import { environment } from './../../environments/environment';
 import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -9,7 +10,7 @@ import { Injectable } from '@angular/core';
 })
 export class AuthService {
 
-  oauthTokenUrl = 'http://localhost:8080/oauth/token';
+  oauthTokenUrl: string;
   jwtPayload: any;
   nameUserLogged: string;
 
@@ -20,6 +21,7 @@ export class AuthService {
     private messageService: MessageService
   ) {
     this.loadToken();
+    this.oauthTokenUrl = `${environment.apiUrl}/oauth/token`;
   }
 
   login(username: string, password: string): Promise<void> {

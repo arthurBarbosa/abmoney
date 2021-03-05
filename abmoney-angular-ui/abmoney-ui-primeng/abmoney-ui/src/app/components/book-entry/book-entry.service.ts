@@ -1,3 +1,4 @@
+import { environment } from './../../../environments/environment';
 import { BookEntry } from './../../model/book-entry';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -16,9 +17,12 @@ export class LancamentoFiltro {
   providedIn: 'root',
 })
 export class BookEntryService {
-  baseUrl = 'http://localhost:8080/bookEntry';
 
-  constructor(private http: HttpClient) { }
+  baseUrl: string;
+
+  constructor(private http: HttpClient) {
+    this.baseUrl = `${environment.apiUrl}/bookEntry`;
+  }
 
   getBookEntry(filter: LancamentoFiltro): Promise<any> {
 

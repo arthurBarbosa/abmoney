@@ -1,3 +1,4 @@
+import { environment } from './../../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
@@ -5,8 +6,12 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class CategoryService {
-  baseUrl = 'http://localhost:8080/categories';
-  constructor(private http: HttpClient) { }
+
+  baseUrl: string;
+
+  constructor(private http: HttpClient) {
+    this.baseUrl = `${environment.apiUrl}/categories`;
+  }
 
   getAllCategories(): Promise<any> {
     const headers = new HttpHeaders().append(
