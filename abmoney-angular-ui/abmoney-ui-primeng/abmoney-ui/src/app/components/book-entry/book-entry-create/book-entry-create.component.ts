@@ -57,11 +57,11 @@ export class BookEntryCreateComponent implements OnInit {
       paymentDate: ['', Validators.required],
       description: ['', [Validators.required, Validators.minLength(5)]],
       value: ['', Validators.required],
-      person: this.formBuilder.group({
+      personDTO: this.formBuilder.group({
         id: ['', Validators.required],
         name: ['']
       }),
-      category: this.formBuilder.group({
+      categoryDTO: this.formBuilder.group({
         id: ['', Validators.required],
         name: ['']
       }),
@@ -72,8 +72,7 @@ export class BookEntryCreateComponent implements OnInit {
   loadBookEntryById(bookEntryId: number): void {
     this.bookEntryService.getBookEntryById(bookEntryId)
       .then(response => {
-        // this.bookEntry = response;
-        this.form.setValue(response);
+        this.form.patchValue(response);
         this.updateTitleUpdate();
       })
       .catch(error => this.errorHandler.handle(error));
@@ -95,8 +94,7 @@ export class BookEntryCreateComponent implements OnInit {
   updateBookEntry(): void {
     this.bookEntryService.update(this.form.value)
       .then(response => {
-        // this.bookEntry = response;
-        this.form.setValue(response);
+        this.form.patchValue(response);
         this.messageService.add({ severity: 'success', detail: 'Lançamento atualizado com sucesso.' });
         this.updateTitleUpdate();
       })
@@ -108,7 +106,6 @@ export class BookEntryCreateComponent implements OnInit {
       .then(response => {
         this.messageService.add({ severity: 'success', detail: 'Lançamento salvo com sucesso.' });
         this.form.reset();
-        // this.bookEntry = new BookEntry();
         this.router.navigate(['lancamentos', response.id]);
       })
       .catch(err => this.errorHandler.handle(err));
