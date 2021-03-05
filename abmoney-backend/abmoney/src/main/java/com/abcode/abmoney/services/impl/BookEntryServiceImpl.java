@@ -94,6 +94,7 @@ public class BookEntryServiceImpl implements BookEntryService {
         return repository.filter(bookEntryFilter, pageable);
     }
 
+    @Override
     public byte[] reportByPerson(LocalDate init, LocalDate finished) throws JRException {
         List<StaticalReleaseByPersonDTO> data = repository.byPerson(init, finished);
 

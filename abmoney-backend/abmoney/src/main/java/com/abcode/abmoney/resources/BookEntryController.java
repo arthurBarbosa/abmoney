@@ -7,11 +7,15 @@ import com.abcode.abmoney.entities.BookEntry;
 import com.abcode.abmoney.repositories.BookEntryRepository;
 import com.abcode.abmoney.repositories.filter.BookEntryFilter;
 import com.abcode.abmoney.services.BookEntryService;
+import net.sf.jasperreports.engine.JRException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -42,12 +46,12 @@ public class BookEntryController {
     }
 
     @GetMapping(value = "/statistics-by-category")
-    public ResponseEntity<List<StaticalReleaseByCategoryDTO>> statisticsByCategory(){
+    public ResponseEntity<List<StaticalReleaseByCategoryDTO>> statisticsByCategory() {
         return ResponseEntity.ok().body(bookEntryRepository.byCategory(LocalDate.now()));
     }
 
     @GetMapping(value = "/statistics-by-day")
-    public ResponseEntity<List<StaticalReleaseByDayDTO>> statisticsByDay(){
+    public ResponseEntity<List<StaticalReleaseByDayDTO>> statisticsByDay() {
         return ResponseEntity.ok().body(bookEntryRepository.byDay(LocalDate.now().withMonth(2)));
     }
 
@@ -81,5 +85,14 @@ public class BookEntryController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping(value = "/report-by-person")
+    public ResponseEntity<byte[]> reportByPerson(
+            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate init,
+            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate finished) throws JRException {
+
+        byte[] report = service.reportByPerson(init, finished);
+
+        return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_PDF_VALUE).body(report);
+    }
 
 }

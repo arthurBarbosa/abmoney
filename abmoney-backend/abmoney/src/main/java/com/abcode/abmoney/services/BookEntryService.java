@@ -3,10 +3,12 @@ package com.abcode.abmoney.services;
 import com.abcode.abmoney.dto.BookEntryDTO;
 import com.abcode.abmoney.entities.BookEntry;
 import com.abcode.abmoney.repositories.filter.BookEntryFilter;
+import net.sf.jasperreports.engine.JRException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface BookEntryService {
@@ -22,4 +24,6 @@ public interface BookEntryService {
     void delete(Long id);
 
     Page<BookEntry> search(BookEntryFilter bookEntryFilter, Pageable pageable);
+
+    byte[] reportByPerson(LocalDate init, LocalDate finished) throws JRException;
 }
