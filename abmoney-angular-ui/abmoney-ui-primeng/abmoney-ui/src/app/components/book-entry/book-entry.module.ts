@@ -1,3 +1,4 @@
+import { BookEntryRoutingModule } from './book-entry-routing.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from './../shared/shared.module';
@@ -37,7 +38,7 @@ import { LancamentosRoutingModule } from './lancamentos-routing.module';
     SelectButtonModule,
     DropdownModule,
     CurrencyMaskModule,
-    // BookEntryRoutingModule,
+    BookEntryRoutingModule,
     LancamentosRoutingModule,
     SharedModule
   ],
