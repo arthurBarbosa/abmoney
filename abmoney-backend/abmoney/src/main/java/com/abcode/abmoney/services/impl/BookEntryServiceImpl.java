@@ -1,13 +1,19 @@
 package com.abcode.abmoney.services.impl;
 
 import com.abcode.abmoney.dto.BookEntryDTO;
+import com.abcode.abmoney.dto.StaticalReleaseByPersonDTO;
 import com.abcode.abmoney.entities.BookEntry;
-import com.abcode.abmoney.repositories.filter.BookEntryFilter;
 import com.abcode.abmoney.repositories.BookEntryRepository;
 import com.abcode.abmoney.repositories.CategoryRepository;
 import com.abcode.abmoney.repositories.PersonRepository;
+import com.abcode.abmoney.repositories.filter.BookEntryFilter;
 import com.abcode.abmoney.services.BookEntryService;
 import com.abcode.abmoney.services.exceptions.ResourceNotFoundException;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
@@ -17,7 +23,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.io.InputStream;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class BookEntryServiceImpl implements BookEntryService {
@@ -83,6 +94,19 @@ public class BookEntryServiceImpl implements BookEntryService {
         return repository.filter(bookEntryFilter, pageable);
     }
 
+    public byte[] reportByPerson(LocalDate init, LocalDate finished) throws JRException {
+        List<StaticalReleaseByPersonDTO> data = repository.byPerson(init, finished);
+
+        Map<String, Object> paramters = new HashMap<>();
+        paramters.put("DT_INIT", Date.valueOf(init));
+        paramters.put("DT_FINISHED", Date.valueOf(finished));
+
+        InputStream inputStream = this.getClass().getResourceAsStream("report/bookentry-by-person.jasper");
+
+        JasperPrint jasperPrint = JasperFillManager.fillReport(inputStream, paramters, new JRBeanCollectionDataSource(data));
+        return JasperExportManager.exportReportToPdf(jasperPrint);
+    }
+
     private void copyDtoToEntity(BookEntryDTO dto, BookEntry entity) {
 
         var category = categoryRepository.getOne(dto.getCategoryDTO().getId());
@@ -97,4 +121,5 @@ public class BookEntryServiceImpl implements BookEntryService {
         entity.setCategory(category);
         entity.setPerson(person);
     }
+
 }

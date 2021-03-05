@@ -1,12 +1,17 @@
 package com.abcode.abmoney.entities;
 
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
 public enum BookEntryType {
 
-    RECEITA,
-    DESPESA
+    RECEITA("Receita"),
+    DESPESA("Despesa");
+
+    private final String description;
+
+    BookEntryType(String description) {
+        this.description = description;
+    }
 
 }

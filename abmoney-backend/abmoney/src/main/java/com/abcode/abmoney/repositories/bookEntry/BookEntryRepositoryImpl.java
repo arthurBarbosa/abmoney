@@ -2,6 +2,7 @@ package com.abcode.abmoney.repositories.bookEntry;
 
 import com.abcode.abmoney.dto.StaticalReleaseByCategoryDTO;
 import com.abcode.abmoney.dto.StaticalReleaseByDayDTO;
+import com.abcode.abmoney.dto.StaticalReleaseByPersonDTO;
 import com.abcode.abmoney.entities.BookEntry;
 import com.abcode.abmoney.entities.BookEntry_;
 import com.abcode.abmoney.repositories.filter.BookEntryFilter;
@@ -94,6 +95,31 @@ public class BookEntryRepositoryImpl implements BookEntryRepositoryQuery {
         return typedQuery.getResultList();
     }
 
+    @Override
+    public List<StaticalReleaseByPersonDTO> byPerson(LocalDate init, LocalDate finished) {
+        CriteriaBuilder criteriaBuilder = manager.getCriteriaBuilder();
+
+        CriteriaQuery<StaticalReleaseByPersonDTO> criteriaQuery = criteriaBuilder.createQuery(StaticalReleaseByPersonDTO.class);
+
+        Root<BookEntry> root = criteriaQuery.from(BookEntry.class);
+
+        criteriaQuery.select(criteriaBuilder.construct(StaticalReleaseByPersonDTO.class,
+                root.get(BookEntry_.TYPE),
+                root.get(BookEntry_.PERSON),
+                criteriaBuilder.sum(root.get(BookEntry_.VALUE))));
+
+
+        criteriaQuery.where(
+                criteriaBuilder.greaterThanOrEqualTo(root.get(BookEntry_.DUE_DATE), init),
+                criteriaBuilder.lessThanOrEqualTo(root.get(BookEntry_.DUE_DATE), finished));
+
+        criteriaQuery.groupBy(root.get(BookEntry_.TYPE),
+                root.get(BookEntry_.PERSON));
+
+        TypedQuery<StaticalReleaseByPersonDTO> typedQuery = manager.createQuery(criteriaQuery);
+
+        return typedQuery.getResultList();
+    }
 
     private Predicate[] createRestriction(BookEntryFilter bookEntryFilter, CriteriaBuilder builder, Root<BookEntry> root) {
         List<Predicate> predicates = new ArrayList<>();
