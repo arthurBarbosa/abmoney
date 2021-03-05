@@ -1,31 +1,33 @@
 <div class="container">
-  <form autocomplete="off" #f="ngForm" (ngSubmit)="save(f)">
+  <form autocomplete="off" (ngSubmit)="save()" [formGroup]="form">
     <div class="p-grid">
       <div class="p-col-12">
         <h1>{{ getEditing() ? 'Edição de': 'Novo'}} Lançamento</h1>
       </div>
 
       <div class="p-col-12">
-        <p-selectButton [options]="types" name="type" [(ngModel)]="bookEntry.type" #type></p-selectButton>
+        <p-selectButton [options]="types" name="type" formControlName="type"></p-selectButton>
       </div>
 
       <div class="p-col-6 p-md-3 p-fluid">
         <label>Vencimento</label>
-        <p-calendar dateFormat="dd/mm/yy" [inline]="false" [readonlyInput]="false" name="dueDate" #dueDate="ngModel" [(ngModel)]="bookEntry.dueDate" [showIcon]="false"></p-calendar>
+        <p-calendar dateFormat="dd/mm/yy" [inline]="false" [readonlyInput]="false" name="dueDate" formControlName="dueDate" [showIcon]="false"></p-calendar>
+        <app-message [control]="form.get('dueDate')" error="required" text="Informe a data de vencimento.">
+        </app-message>
       </div>
 
       <div class="p-col-6 p-md-3 p-fluid">
-        <label>{{ type.value === "RECEITA" ? "Recebimento" : "Pagamento" }}</label>
-        <p-calendar dateFormat="dd/mm/yy" [inline]="false" [readonlyInput]="false" name="paymentDate" [(ngModel)]="bookEntry.paymentDate" [showIcon]="false"></p-calendar>
+        <label>{{ form.get('type').value === "RECEITA" ? "Recebimento" : "Pagamento" }}</label>
+        <p-calendar formControlName="paymentDate" dateFormat="dd/mm/yy" [inline]="false" [readonlyInput]="false" name="paymentDate" [showIcon]="false"></p-calendar>
       </div>
 
       <div class="p-col-12 p-md-9 p-fluid">
         <label>Descrição</label>
-        <input pInputText type="text" name="description" ngModel #description="ngModel" [(ngModel)]="bookEntry.description" required minlength="5" />
-        <app-message [control]="description" error="required" text="Informe uma descrição">
+        <input pInputText type="text" name="description" formControlName="description" required minlength="5" />
+        <app-message [control]="form.get('description')" error="required" text="Informe uma descrição">
         </app-message>
-        <app-message [control]="description" error="minlength" text="  Mínimo de {{
-            description.errors?.minlength?.requiredLength
+        <app-message [control]="form.get('description')" error="minlength" text="  Mínimo de {{
+            form.get('description').errors?.minlength?.requiredLength
           }} caracteres.">
         </app-message>
       </div>
@@ -37,28 +39,28 @@
             thousands: '.',
             decimal: ',',
             allowNegative: false
-          }" ngModel name="value" [(ngModel)]="bookEntry.value" placeholder="0,00" />
+          }" formControlName="value" placeholder="0,00" />
       </div>
 
-      <div class="p-col-12 p-md-6 p-fluid">
-        <label>Categoria {{ category.value }}</label>
-        <p-dropdown #category [options]="categories" name="category" [(ngModel)]="bookEntry.categoryDTO.id" placeholder="Selecione">
+      <div class="p-col-12 p-md-6 p-fluid" formGroupName="category">
+        <label>Categoria {{ form.get('id') }}</label>
+        <p-dropdown formControlName="id" [options]="categories" name="category" placeholder="Selecione">
         </p-dropdown>
       </div>
 
-      <div class="p-col-12 p-md-6 p-fluid">
-        <label>Pessoa {{person.value}}</label>
-        <p-dropdown #person [options]="persons" placeholder="selecione" [filter]="true" name="person" [(ngModel)]="bookEntry.personDTO.id"></p-dropdown>
+      <div class="p-col-12 p-md-6 p-fluid" formGroupName="person">
+        <label>Pessoa {{form.get('person')}}</label>
+        <p-dropdown formControlName="id" [options]="persons" placeholder="selecione" [filter]="true" name="person"></p-dropdown>
       </div>
 
       <div class="p-col-12 p-fluid">
         <label>Observação</label>
-        <textarea pInputTextarea rows="3" name="observation" [(ngModel)]="bookEntry.observation"></textarea>
+        <textarea pInputTextarea rows="3" name="observation" formControlName="observation"></textarea>
       </div>
 
       <div class="p-col-12">
-        <button pButton type="submit" label="Salvar"></button>
-        <button pButton type="button" label="Novo" (click)="new(f)" class="p-button-info"></button>
+        <button pButton type="submit" label="Salvar" [disabled]="[form.invalid]"></button>
+        <button pButton type="button" label="Novo" (click)="new()" class="p-button-info"></button>
         <a routerLink="/lancamentos">Voltar para a pesquisa</a>
       </div>
     </div>
