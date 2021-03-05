@@ -4,6 +4,7 @@ import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from "@angular/c
 import { from, Observable } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 
+export class NotAuthenticatedError { }
 
 @Injectable()
 export class AppHttpInterceptor implements HttpInterceptor {

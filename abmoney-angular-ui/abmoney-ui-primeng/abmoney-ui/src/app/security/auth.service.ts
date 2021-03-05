@@ -1,3 +1,5 @@
+import { MessageService } from 'primeng/api';
+import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -13,7 +15,9 @@ export class AuthService {
 
   constructor(
     private http: HttpClient,
-    private jwtHelp: JwtHelperService
+    private jwtHelp: JwtHelperService,
+    private router: Router,
+    private messageService: MessageService
   ) {
     this.loadToken();
   }
@@ -60,6 +64,15 @@ export class AuthService {
     return !token || this.jwtHelp.isTokenExpired(token);
   }
 
+  getRefreshTokenLocalStorage(): string {
+    const refreshToken = localStorage.getItem('refresh_token');
+    if (this.jwtHelp.isTokenExpired(refreshToken)) {
+      this.router.navigate(['login']);
+      this.messageService.add({ severity: 'error', detail: 'Sua sessão expirou. Faça login novamente.' });
+    }
+    return localStorage.getItem('refresh_token');
+  }
+
   private loadToken(): void {
     const token = localStorage.getItem('token');
 
@@ -81,9 +94,7 @@ export class AuthService {
     return false;
   }
 
-  getRefreshTokenLocalStorage(): string {
-    return localStorage.getItem('refresh_token');
-  }
+
 
   getNewAccessToken(): Promise<void> {
     const headers = new HttpHeaders()
