@@ -1,16 +1,22 @@
-<nav class="navbar">
-  <div class="container">
-    <div class="p-grid">
-      <div class="p-col-12">
-        <a href="javascript:;" class="navbar-toggle" (click)="showMenu()"><i class="pi pi-bars"></i></a>
-      </div>
-    </div>
+<input type="checkbox" id="check">
+<nav>
+  <div class="icon">AB <b style="color: #ff003c;">M</b>oney</div>
+  <div class="search-box">
+    <input type="text" placeholder="Search">
+    <span class="pi pi-search"></span>
   </div>
-
-  <ul class="navbar-menu" [hidden]="!show">
-    <li class="navbar-usuario" (click)="showMenu()">{{getNameUserLogged()}}</li>
+  <ol>
+    <li><a href="">Home</a></li>
     <li *ngIf="hasAuthority(['ROLE_ADMIN', 'ROLE_OPERATOR'])" class="navbar-menuitem" routerLinkActive="active"><a routerLink="/lancamentos">Lançamentos</a></li>
     <li *ngIf="hasAuthority(['ROLE_ADMIN', 'ROLE_OPERATOR'])" class="navbar-menuitem" routerLinkActive="active"><a routerLink="/pessoas">Pessoas</a></li>
     <li class="navbar-menuitem" routerLinkActive="active" (click)="logout()"><a href="#">Logout</a></li>
-  </ul>
+    <li><a href=""></a></li>
+  </ol>
+  <label for="check" class="bar">
+    <span class="bars hamburguer" id="bars"></span>
+    <span class="times hamburguer" id="times"></span>
+  </label>
 </nav>
+<div class="user-logged">
+  Bem vindo {{getNameUserLogged()}}
+</div>

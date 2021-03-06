@@ -54,7 +54,7 @@ export class BookEntryCreateComponent implements OnInit {
       id: [],
       type: ['RECEITA', Validators.required],
       dueDate: ['', Validators.required],
-      paymentDate: ['', Validators.required],
+      paymentDate: [''],
       description: ['', [Validators.required, Validators.minLength(5)]],
       value: ['', Validators.required],
       personDTO: this.formBuilder.group({
