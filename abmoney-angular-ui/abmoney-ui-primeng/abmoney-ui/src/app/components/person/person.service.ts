@@ -6,8 +6,8 @@ import { Person } from '../../model/person';
 export class PersonFilter {
   name: string;
   page = 0;
-  linesPerPage = 5;
-  size = 5;
+  linesPerPage = 6;
+  size = 8;
 }
 
 @Injectable({

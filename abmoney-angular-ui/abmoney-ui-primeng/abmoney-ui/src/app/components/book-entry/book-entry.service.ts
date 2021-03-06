@@ -10,7 +10,7 @@ export class LancamentoFiltro {
   dueDate: Date;
   expirationDateBy: Date;
   page = 0;
-  size = 5;
+  size = 6;
 }
 
 @Injectable({

@@ -12,7 +12,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 })
 export class PersonListComponent implements OnInit {
   linesPerPage = 0;
-  size = 5;
+  
   person = new PersonFilter();
   persons: any[];
 
