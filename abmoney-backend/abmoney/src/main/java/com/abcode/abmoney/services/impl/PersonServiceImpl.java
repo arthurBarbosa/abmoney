@@ -1,7 +1,10 @@
 package com.abcode.abmoney.services.impl;
 
+import com.abcode.abmoney.dto.ContactDTO;
 import com.abcode.abmoney.dto.PersonDTO;
+import com.abcode.abmoney.entities.Contact;
 import com.abcode.abmoney.entities.Person;
+import com.abcode.abmoney.repositories.ContactRepository;
 import com.abcode.abmoney.repositories.PersonRepository;
 import com.abcode.abmoney.services.PersonService;
 import com.abcode.abmoney.services.exceptions.DatabaseException;
@@ -22,6 +25,9 @@ public class PersonServiceImpl implements PersonService {
     @Autowired
     private PersonRepository repository;
 
+    @Autowired
+    private ContactRepository contactRepository;
+
     @Override
     @Transactional(readOnly = true)
     public Page<PersonDTO> findAllPaged(PageRequest pageRequest) {
@@ -41,7 +47,6 @@ public class PersonServiceImpl implements PersonService {
     public PersonDTO insert(PersonDTO dto) {
         var entity = new Person();
         copyDtoToEntity(dto, entity);
-        entity = repository.save(entity);
         return new PersonDTO(entity);
     }
 
@@ -51,7 +56,6 @@ public class PersonServiceImpl implements PersonService {
         try {
             var entity = repository.getOne(id);
             copyDtoToEntity(dto, entity);
-            entity = repository.save(entity);
             return new PersonDTO(entity);
         } catch (EntityNotFoundException e) {
             throw new ResourceNotFoundException("Id not found " + id);
@@ -81,5 +85,21 @@ public class PersonServiceImpl implements PersonService {
         entity.setName(dto.getName());
         entity.setStatus(dto.getStatus());
         entity.setAddress(dto.getAddress());
+        entity = repository.save(entity);
+
+        for (ContactDTO contactDTO : dto.getContactDTOS()) {
+            Contact contact = new Contact();
+            var idPerson = entity.getId();
+            var person = repository.getOne(idPerson);
+
+            contact.setId(contactDTO.getId());
+            contact.setName(contactDTO.getName());
+            contact.setEmail(contactDTO.getEmail());
+            contact.setPhone(contactDTO.getPhone());
+            contact.setPerson(person);
+            contactRepository.save(contact);
+        }
+
     }
+
 }
