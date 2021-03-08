@@ -3,7 +3,10 @@ package com.abcode.abmoney.entities;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -24,4 +27,8 @@ public class Person implements Serializable {
     private Address address;
 
     private Boolean status;
+
+    @Valid
+    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
+    private List<Contact> contacts = new ArrayList<>();
 }
