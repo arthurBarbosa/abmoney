@@ -18,8 +18,13 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.net.URI;
 import java.time.LocalDate;
 import java.util.List;
@@ -93,6 +98,15 @@ public class BookEntryController {
         byte[] report = service.reportByPerson(init, finished);
 
         return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_PDF_VALUE).body(report);
+    }
+
+    @PostMapping("/upload-file")
+    public String upload(@RequestParam("file") MultipartFile file) throws IOException {
+        OutputStream outputStream = new FileOutputStream("/home/arthur.barbosa/Desenvolvimento/project-pratice/ws-abmoney/abmoney-angular-ui/abmoney-ui-primeng/abmoney-ui/src/assets/" + file.getOriginalFilename());
+        outputStream.write(file.getBytes());
+        outputStream.close();
+        return "ok";
+
     }
 
 }
