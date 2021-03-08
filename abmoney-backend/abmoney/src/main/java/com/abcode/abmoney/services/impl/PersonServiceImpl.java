@@ -86,18 +86,33 @@ public class PersonServiceImpl implements PersonService {
         entity.setStatus(dto.getStatus());
         entity.setAddress(dto.getAddress());
         entity = repository.save(entity);
+        if (dto.getContactDTOS().size() == 0) {
+            entity.getContacts().clear();
+        }
 
         for (ContactDTO contactDTO : dto.getContactDTOS()) {
             Contact contact = new Contact();
             var idPerson = entity.getId();
             var person = repository.getOne(idPerson);
 
-            contact.setId(contactDTO.getId());
-            contact.setName(contactDTO.getName());
-            contact.setEmail(contactDTO.getEmail());
-            contact.setPhone(contactDTO.getPhone());
-            contact.setPerson(person);
-            contactRepository.save(contact);
+            if (person.getContacts().size() != 0) {
+                var contatoBase = contactRepository.findById(contactDTO.getId()).get();
+                contatoBase.setId(contatoBase.getId());
+                contatoBase.setName(contactDTO.getName());
+                contatoBase.setEmail(contactDTO.getEmail());
+                contatoBase.setPhone(contactDTO.getPhone());
+                contatoBase.setPerson(person);
+                contactRepository.save(contatoBase);
+            } else {
+                contact.setId(contactDTO.getId());
+                contact.setName(contactDTO.getName());
+                contact.setEmail(contactDTO.getEmail());
+                contact.setPhone(contactDTO.getPhone());
+                contact.setPerson(person);
+                contact = contactRepository.save(contact);
+                entity.getContacts().add(contact);
+            }
+
         }
 
     }

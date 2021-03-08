@@ -3,6 +3,7 @@ package com.abcode.abmoney.dto;
 import com.abcode.abmoney.entities.BookEntry;
 import com.abcode.abmoney.entities.BookEntryType;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,6 +29,7 @@ public class BookEntryDTO implements Serializable {
     private String observation;
     private BookEntryType type;
     private CategoryDTO categoryDTO;
+    @JsonIgnoreProperties("contactDTOS")
     private PersonDTO personDTO;
 
     public BookEntryDTO(BookEntry entity) {

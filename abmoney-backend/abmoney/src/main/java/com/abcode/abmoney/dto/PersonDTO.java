@@ -29,7 +29,9 @@ public class PersonDTO {
         this.name = entity.getName();
         this.status = entity.getStatus();
         this.address = entity.getAddress();
-        entity.getContacts().forEach(c -> this.contactDTOS.add(new ContactDTO(c)));
+        if (entity.getContacts().size() != 0 || contactDTOS.size() != 0) {
+            entity.getContacts().forEach(c -> this.contactDTOS.add(new ContactDTO(c)));
+        }
     }
 
 }

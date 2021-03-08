@@ -29,6 +29,6 @@ public class Person implements Serializable {
     private Boolean status;
 
     @Valid
-    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Contact> contacts = new ArrayList<>();
 }
