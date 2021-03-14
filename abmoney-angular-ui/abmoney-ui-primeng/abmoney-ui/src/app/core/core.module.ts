@@ -19,6 +19,7 @@ import { PersonService } from './../components/person/person.service';
 import { BookEntryService } from './../components/book-entry/book-entry.service';
 import { ErrorHandlerService } from './error-handler.service';
 import { AuthService } from './../security/auth.service';
+import { DashboardService } from '../dashboard/dashboard.service';
 
 registerLocaleData(localePt);
 
@@ -39,6 +40,7 @@ registerLocaleData(localePt);
     MessageService,
     CategoryService,
     ConfirmationService,
+    DashboardService,
 
     JwtHelperService,
     ErrorHandlerService,

@@ -5,7 +5,7 @@ import { LoginFormComponent } from './security/login-form/login-form.component';
 import { PageNotFoundComponent } from './components/not-found/page-not-found/page-not-found.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/lancamentos', pathMatch: 'full' },
+  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: 'login', component: LoginFormComponent },
 
   {
@@ -16,6 +16,10 @@ const routes: Routes = [
   {
     path: 'pessoas',
     loadChildren: () => import('../app/components/person/person.module').then(p => p.PersonModule)
+  },
+  {
+    path: 'dashboard',
+    loadChildren: () => import('../app/dashboard/dashboard.module').then(d => d.DashboardModule)
   },
 
   {
