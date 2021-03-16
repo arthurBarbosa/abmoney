@@ -1,5 +1,6 @@
 package com.abcode.abmoney.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import javax.persistence.*;
@@ -31,6 +32,7 @@ public class BookEntry implements Serializable {
     @JoinColumn(name = "category_id")
     private Category category;
 
+    @JsonIgnoreProperties("contacts")
     @ManyToOne
     @JoinColumn(name = "person_id")
     private Person person;
